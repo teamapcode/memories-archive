@@ -353,13 +353,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 0.5rem;
         }
 
         .storybook-header .header-left {
-            flex: 1;
-            text-align: right;
+            flex-shrink: 0;
         }
 
         .storybook-header .header-left h1 {
@@ -371,11 +370,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            white-space: nowrap;
         }
 
         .storybook-header .header-right {
             text-align: left;
-            padding-right: 0.5rem;
+            flex-shrink: 0;
         }
 
         .storybook-header .header-right span {
@@ -904,24 +904,6 @@
            واکنش‌گرایی
            ============================================================ */
         @media (max-width: 768px) {
-           
-                /* ... کدهای قبلی ... */
-                
-                /* اضافه کن: */
-                .storybook-header .header-row {
-                    flex-wrap: nowrap !important;
-                    gap: 0.2rem !important;
-                }
-                .storybook-header .header-left h1 {
-                    font-size: 1.3rem !important;
-                    white-space: nowrap !important;
-                }
-                .storybook-header .header-right span {
-                    font-size: 0.55rem !important;
-                    padding: 0.1rem 0.4rem !important;
-                    white-space: nowrap !important;
-                }
-            
             .cloud-float-left {
                 left: 8px;
                 bottom: 10%;
@@ -1044,14 +1026,23 @@
             .cloud-float-center {
                 display: none;
             }
+            
+            /* ===== درست کردن هدر برای گوشی ===== */
+            .storybook-header .header-row {
+                flex-wrap: nowrap !important;
+                gap: 0.2rem !important;
+                justify-content: space-between !important;
+            }
             .storybook-header .header-left h1 {
-                font-size: 1.6rem;
+                font-size: 1.2rem !important;
+                white-space: nowrap !important;
             }
             .storybook-header .header-right span {
-                font-size: 0.65rem;
-                padding: 0.15rem 0.6rem;
-                white-space: normal;
+                font-size: 0.5rem !important;
+                padding: 0.1rem 0.4rem !important;
+                white-space: nowrap !important;
             }
+            
             .story-nav .nav-btn {
                 font-size: 0.75rem;
                 padding: 0.2rem 0.7rem;
@@ -1063,20 +1054,49 @@
             .gallery-item .icon {
                 font-size: 2.4rem;
             }
+            
+            /* ===== درست کردن لودینگ برای گوشی ===== */
+            #loading-screen {
+                padding: 0.5rem;
+            }
             .cloud-wrapper {
                 width: 80px;
                 height: 58px;
+                margin-bottom: 1rem;
             }
             .story-text {
-                font-size: 1rem;
-                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+                min-height: 3.5rem;
+                margin-bottom: 1rem;
             }
             .star {
-                display: none;
+                display: block !important;
+                font-size: 0.9rem !important;
+                filter: drop-shadow(0 2px 6px rgba(160, 130, 200, 0.15));
+            }
+            .star:nth-child(2) {
+                font-size: 1.2rem !important;
+                top: -10px;
+                right: -14px;
+            }
+            .star:nth-child(3) {
+                font-size: 1rem !important;
+                bottom: -8px;
+                left: -12px;
+            }
+            .star:nth-child(4),
+            .star:nth-child(5) {
+                display: none !important;
             }
             .progress-container {
-                width: 200px;
+                width: 180px;
             }
+            .progress-label {
+                font-size: 0.75rem;
+                padding: 0.1rem 0.8rem;
+            }
+            
             .timeline {
                 padding-right: 1.2rem;
             }
@@ -1087,6 +1107,9 @@
             }
             .timeline-item .timeline-title {
                 font-size: 1rem;
+            }
+            .storybook-header .subtitle {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1260,26 +1283,26 @@
             </div>
 
             <!-- ===== صفحه لحظه‌ها ===== -->
-<div id="page-moments" class="story-page">
-    
-    <div class="memory-card" onclick="toggleMemory(this)">
-        <div class="card-title">
-            <span class="emoji">✨</span> اولین نفسِ گرم و شیرین…
-        </div>
-        <div class="card-sub">✨ برای خواندن کلیک کنید ✨</div>
-        
-        <div class="card-content">
-            <p style="font-size:1.15rem; line-height:2.1; color:var(--color-soft-brown); text-align:center; max-width:750px; margin:0 auto;">
-                زمانی که برای اولین بار ریه‌های کوچکت را با هوای دنیا پر کردی، انگار زمان ایستاد. صدای اولین نفس‌هایت، زیباترین موسیقی‌ای بود که تا به حال شنیده بودم. خوش آمدی به این جهانِ پر از عشق.
-            </p>
-            <div style="text-align:center; margin-top:1rem; font-size:0.9rem; color:var(--color-soft-brown); opacity:0.5;">
-                📅 [زمان را وارد کنید]
-            </div>
-            <button class="close-btn" onclick="event.stopPropagation(); closeMemory(this)">بستن</button>
-        </div>
-    </div>
+            <div id="page-moments" class="story-page">
+                
+                <div class="memory-card" onclick="toggleMemory(this)">
+                    <div class="card-title">
+                        <span class="emoji">✨</span> اولین نفسِ گرم و شیرین…
+                    </div>
+                    <div class="card-sub">✨ برای خواندن کلیک کنید ✨</div>
+                    
+                    <div class="card-content">
+                        <p style="font-size:1.15rem; line-height:2.1; color:var(--color-soft-brown); text-align:center; max-width:750px; margin:0 auto;">
+                            زمانی که برای اولین بار ریه‌های کوچکت را با هوای دنیا پر کردی، انگار زمان ایستاد. صدای اولین نفس‌هایت، زیباترین موسیقی‌ای بود که تا به حال شنیده بودم. خوش آمدی به این جهانِ پر از عشق.
+                        </p>
+                        <div style="text-align:center; margin-top:1rem; font-size:0.9rem; color:var(--color-soft-brown); opacity:0.5;">
+                            📅 [زمان را وارد کنید]
+                        </div>
+                        <button class="close-btn" onclick="event.stopPropagation(); closeMemory(this)">بستن</button>
+                    </div>
+                </div>
 
-</div>
+            </div>
 
             <!-- ===== صفحه گفته‌ها ===== -->
             <div id="page-quotes" class="story-page">
