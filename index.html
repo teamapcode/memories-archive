@@ -1009,19 +1009,28 @@
         }
 
         @media (max-width: 480px) {
+            /* ===== ابرها با رنگ آبی در گوشی ===== */
             .cloud-float-left {
                 left: 4px;
                 bottom: 8%;
-                font-size: 2rem;
-                opacity: 0.2;
-                -webkit-text-stroke: 1px rgba(120, 180, 220, 0.2);
+                font-size: 2.5rem;
+                opacity: 0.3 !important;
+                color: #4A8DB7 !important;
+                -webkit-text-stroke: 2px #4A8DB7 !important;
+                text-stroke: 2px #4A8DB7 !important;
+                filter: drop-shadow(0 4px 12px rgba(74, 141, 183, 0.2));
+                display: block !important;
             }
             .cloud-float-right {
                 right: 4px;
                 top: 12%;
-                font-size: 2.2rem;
-                opacity: 0.18;
-                -webkit-text-stroke: 1px rgba(120, 180, 220, 0.2);
+                font-size: 2.8rem;
+                opacity: 0.25 !important;
+                color: #4A8DB7 !important;
+                -webkit-text-stroke: 2px #4A8DB7 !important;
+                text-stroke: 2px #4A8DB7 !important;
+                filter: drop-shadow(0 4px 12px rgba(74, 141, 183, 0.2));
+                display: block !important;
             }
             .cloud-float-center {
                 display: none;
@@ -1055,7 +1064,7 @@
                 font-size: 2.4rem;
             }
             
-            /* ===== درست کردن لودینگ برای گوشی ===== */
+            /* ===== درست کردن لودینگ با ستاره‌ها ===== */
             #loading-screen {
                 padding: 0.5rem;
             }
@@ -1070,6 +1079,8 @@
                 min-height: 3.5rem;
                 margin-bottom: 1rem;
             }
+            
+            /* ستاره‌ها رو درست کن */
             .star {
                 display: block !important;
                 font-size: 0.9rem !important;
@@ -1089,6 +1100,7 @@
             .star:nth-child(5) {
                 display: none !important;
             }
+            
             .progress-container {
                 width: 180px;
             }
