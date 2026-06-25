@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+    <title>My Story • خاطرات نوزاد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;350;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           پالت «ابر و ستاره» - Dreamy & Calm
+           ============================================================ */
+
+        :root {
+            --color-cream: #FDFCF0;
+            --color-cream-light: #FFFEF8;
+            --color-sky-blue: #D1E9F6;
+            --color-lavender: #E6E6FA;
+            --color-purple-soft: #D4C5F9;
+            --color-purple-card: #EDE4F8;
+            --color-soft-brown: #334756;
+            --color-charcoal: #2A3A47;
+
+            --shadow-soft: 0 8px 28px rgba(160, 130, 200, 0.20);
+            --shadow-medium: 0 12px 36px rgba(160, 130, 200, 0.25);
+            --shadow-float: 0 16px 48px rgba(160, 130, 200, 0.30);
+
+            --font-primary: 'Vazirmatn', 'Segoe UI', system-ui, sans-serif;
+            --font-weight-light: 300;
+            --font-weight-regular: 350;
+            --font-weight-medium: 400;
+            --font-weight-bold: 500;
+            --font-weight-extra-bold: 700;
+
+            --radius-xl: 48px;
+            --radius-lg: 32px;
+            --radius-md: 24px;
+            --radius-sm: 16px;
+            --radius-xs: 12px;
+
+            --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-medium: 0.4s ease;
+            --transition-fade: 0.8s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            font-weight: var(--font-weight-regular);
+            color: var(--color-soft-brown);
+            background: var(--color-cream);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(209, 233, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(230, 230, 250, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            direction: rtl;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+           ابرهای شناور
+           ============================================================ */
+
+        .cloud-float-left {
+            position: fixed;
+            left: 20px;
+            bottom: 15%;
+            font-size: 4.5rem;
+            opacity: 0.4;
+            animation: floatSway 6s ease-in-out infinite alternate;
+            z-index: 10;
+            pointer-events: none;
+            filter: drop-shadow(0 8px 20px rgba(160, 130, 200, 0.25));
+            display: block;
+            -webkit-text-stroke: 2px rgba(120, 180, 220, 0.4);
+        }
+
+        .cloud-float-right {
+            position: fixed;
+            right: 20px;
+            top: 20%;
+            font-size: 5rem;
+            opacity: 0.35;
+            animation: floatSway 7s ease-in-out infinite alternate-reverse;
+            z-index: 10;
+            pointer-events: none;
+            filter: drop-shadow(0 8px 20px rgba(160, 130, 200, 0.25));
+            display: block;
+            -webkit-text-stroke: 2px rgba(120, 180, 220, 0.4);
+        }
+
+        .cloud-float-center {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 8%;
+            font-size: 3rem;
+            opacity: 0.2;
+            animation: floatSway 8s ease-in-out infinite alternate;
+            z-index: 5;
+            pointer-events: none;
+            filter: drop-shadow(0 8px 20px rgba(160, 130, 200, 0.12));
+            display: block;
+            -webkit-text-stroke: 1.5px rgba(120, 180, 220, 0.3);
+        }
+
+        @keyframes floatSway {
+            0% {
+                transform: translateY(0px) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-18px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-8px) rotate(2deg);
+            }
+        }
+
+        /* ============================================================
+           صفحه لودینگ
+           ============================================================ */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 30% 20%, #FDFCF0, #E6E6FA);
+            transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
+            opacity: 1;
+            visibility: visible;
+            will-change: opacity, visibility;
+            padding: 1.5rem;
+        }
+
+        #loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .cloud-wrapper {
+            position: relative;
+            width: 140px;
+            height: 100px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 16px 32px rgba(160, 130, 200, 0.25));
+            animation: floatCloud 4.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateY(0px) scale(0.97);
+            }
+            100% {
+                transform: translateY(-12px) scale(1.04);
+            }
+        }
+
+        .cloud-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            animation: glowPulse 3.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% {
+                filter: drop-shadow(0 8px 24px rgba(160, 130, 200, 0.18)) brightness(0.97);
+            }
+            100% {
+                filter: drop-shadow(0 20px 44px rgba(160, 130, 200, 0.30)) brightness(1.05);
+            }
+        }
+
+        .star {
+            position: absolute;
+            font-size: 1.4rem;
+            animation: twinkleStar 3s infinite alternate;
+            filter: drop-shadow(0 4px 8px rgba(160, 130, 200, 0.18));
+        }
+
+        .star:nth-child(2) {
+            top: -14px;
+            right: -20px;
+            animation-delay: 0.3s;
+            font-size: 1.8rem;
+        }
+        .star:nth-child(3) {
+            bottom: -12px;
+            left: -18px;
+            animation-delay: 0.9s;
+            font-size: 1.6rem;
+        }
+        .star:nth-child(4) {
+            top: 20%;
+            left: -24px;
+            animation-delay: 1.5s;
+            font-size: 1.2rem;
+        }
+        .star:nth-child(5) {
+            bottom: 18%;
+            right: -22px;
+            animation-delay: 0.6s;
+            font-size: 1.3rem;
+        }
+
+        @keyframes twinkleStar {
+            0% {
+                transform: scale(0.7) rotate(0deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.3) rotate(20deg);
+                opacity: 1;
+            }
+        }
+
+        .story-text {
+            font-size: 1.6rem;
+            font-weight: 350;
+            letter-spacing: 0.02em;
+            color: var(--color-soft-brown);
+            background: rgba(255, 254, 248, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 1rem 2.2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(209, 233, 246, 0.3);
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            transition: opacity 0.5s ease;
+            line-height: 1.7;
+            min-height: 5.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .progress-container {
+            width: 320px;
+            max-width: 85%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(209, 233, 246, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 4px rgba(160, 130, 200, 0.12);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #D4C5F9, #B8A4E0);
+            border-radius: 10px;
+            transition: width 0.25s ease-out;
+            box-shadow: 0 0 12px rgba(160, 130, 200, 0.35);
+        }
+
+        .progress-label {
+            font-size: 0.95rem;
+            color: var(--color-soft-brown);
+            letter-spacing: 0.04em;
+            font-weight: 320;
+            background: rgba(209, 233, 246, 0.15);
+            padding: 0.2rem 1.2rem;
+            border-radius: var(--radius-sm);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(209, 233, 246, 0.15);
+        }
+
+        #loading-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 15% 25%, rgba(209, 233, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(230, 230, 250, 0.12) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        /* ============================================================
+           صفحه اصلی
+           ============================================================ */
+        #main-site {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            background: var(--color-cream);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(209, 233, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(230, 230, 250, 0.1) 0%, transparent 50%);
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        #main-site.show {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .storybook {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 254, 248, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: var(--radius-xl);
+            padding: 2rem 2.5rem;
+            border: 1px solid rgba(209, 233, 246, 0.2);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            z-index: 3;
+        }
+
+        /* ----- هدر با عبارت سمت راست ----- */
+        .storybook-header {
+            text-align: center;
+            padding: 1.5rem 0 2rem;
+            border-bottom: 1px dashed rgba(209, 233, 246, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .storybook-header .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .storybook-header .header-left {
+            flex: 1;
+            text-align: right;
+        }
+
+        .storybook-header .header-left h1 {
+            font-size: 2.8rem;
+            font-weight: var(--font-weight-extra-bold);
+            letter-spacing: 0.02em;
+            margin-bottom: 0;
+            background: linear-gradient(135deg, #4A6A7A 0%, #6A7AAA 30%, #9A8AC0 55%, #B8A4E0 75%, #D4C5F9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .storybook-header .header-right {
+            text-align: left;
+            padding-right: 0.5rem;
+        }
+
+        .storybook-header .header-right span {
+            font-size: 0.8rem;
+            color: #4A8DB7;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            background: rgba(74, 141, 183, 0.08);
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            border: 1px solid rgba(74, 141, 183, 0.12);
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .storybook-header .subtitle {
+            font-size: 1.05rem;
+            font-weight: var(--font-weight-light);
+            color: var(--color-soft-brown);
+            opacity: 0.6;
+            letter-spacing: 0.06em;
+            margin-top: 0.4rem;
+            text-align: center;
+        }
+
+        .storybook-header .subtitle span {
+            display: inline-block;
+            animation: floatText 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatText {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* ----- نوار ناوبری ----- */
+        .story-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem 1.2rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 254, 248, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(209, 233, 246, 0.25);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 2.5rem;
+        }
+
+        .story-nav .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: var(--radius-xl);
+            font-size: 1rem;
+            font-weight: var(--font-weight-regular);
+            color: var(--color-soft-brown);
+            opacity: 0.7;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            font-family: var(--font-primary);
+            border: 1px solid transparent;
+        }
+
+        .story-nav .nav-btn:hover {
+            background: rgba(209, 233, 246, 0.15);
+            opacity: 1;
+        }
+
+        .story-nav .nav-btn.active {
+            background: rgba(180, 160, 200, 0.15);
+            border-color: #D4C5F9;
+            color: var(--color-charcoal);
+            font-weight: var(--font-weight-medium);
+            opacity: 1;
+        }
+
+        /* ----- صفحات ----- */
+        .story-page {
+            display: none;
+            animation: fadePage var(--transition-fade);
+            padding: 0.5rem 0 1rem;
+        }
+
+        .story-page.active {
+            display: block;
+        }
+
+        @keyframes fadePage {
+            0% {
+                opacity: 0.3;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ----- کارت‌ها ----- */
+        .story-card {
+            background: rgba(212, 197, 249, 0.25);
+            backdrop-filter: blur(6px);
+            border-radius: var(--radius-xl);
+            padding: 2rem 2.2rem;
+            border: 1px solid rgba(212, 197, 249, 0.3);
+            box-shadow: 0 8px 30px rgba(160, 130, 200, 0.22);
+            transition: all var(--transition-medium);
+            margin-bottom: 1.5rem;
+        }
+
+        .story-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 50px rgba(160, 130, 200, 0.32);
+            background: rgba(212, 197, 249, 0.35);
+        }
+
+        .story-card .card-title {
+            font-size: 1.6rem;
+            font-weight: var(--font-weight-light);
+            color: var(--color-charcoal);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .story-card .card-title .emoji {
+            font-size: 2rem;
+        }
+
+        /* ============================================================
+           کارت خاطره با قابلیت باز و بسته شدن
+           ============================================================ */
+        .memory-card {
+            background: rgba(212, 197, 249, 0.25);
+            backdrop-filter: blur(6px);
+            border-radius: var(--radius-xl);
+            padding: 2rem 2.2rem;
+            border: 1px solid rgba(212, 197, 249, 0.3);
+            box-shadow: 0 8px 30px rgba(160, 130, 200, 0.22);
+            transition: all var(--transition-medium);
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 50px rgba(160, 130, 200, 0.32);
+            background: rgba(212, 197, 249, 0.35);
+        }
+
+        .memory-card .card-title {
+            font-size: 1.6rem;
+            font-weight: var(--font-weight-light);
+            color: var(--color-charcoal);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .memory-card .card-title .emoji {
+            font-size: 2rem;
+        }
+
+        .memory-card .card-sub {
+            font-size: 1rem;
+            color: var(--color-soft-brown);
+            opacity: 0.6;
+            font-weight: var(--font-weight-light);
+        }
+
+        .memory-card .card-content {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed rgba(212, 197, 249, 0.4);
+            animation: fadeContent 0.5s ease;
+        }
+
+        .memory-card .card-content.open {
+            display: block;
+        }
+
+        @keyframes fadeContent {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .memory-card .card-content .quote-item {
+            background: rgba(255, 254, 248, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border-right: 3px solid #D4C5F9;
+        }
+
+        .memory-card .card-content .quote-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .memory-card .card-content .quote-item .q {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--color-soft-brown);
+        }
+
+        .memory-card .card-content .quote-item .by {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--color-soft-brown);
+            opacity: 0.6;
+            text-align: left;
+        }
+
+        .memory-card .card-content .close-btn {
+            display: block;
+            margin: 1.2rem auto 0;
+            background: rgba(212, 197, 249, 0.2);
+            border: none;
+            padding: 0.4rem 1.8rem;
+            border-radius: var(--radius-xl);
+            font-size: 0.9rem;
+            color: var(--color-soft-brown);
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            font-family: var(--font-primary);
+            border: 1px solid rgba(212, 197, 249, 0.2);
+        }
+
+        .memory-card .card-content .close-btn:hover {
+            background: rgba(212, 197, 249, 0.4);
+        }
+
+        /* ============================================================
+           بخش مشخصات من
+           ============================================================ */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem 2rem;
+        }
+
+        .profile-item {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px dashed rgba(209, 233, 246, 0.25);
+            padding-bottom: 0.6rem;
+        }
+
+        .profile-item .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-soft-brown);
+            opacity: 0.6;
+            font-weight: var(--font-weight-regular);
+            margin-bottom: 0.1rem;
+        }
+
+        .profile-item .value {
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-regular);
+            color: var(--color-soft-brown);
+            background: rgba(255, 254, 248, 0.5);
+            padding: 0.1rem 0.8rem;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            align-self: flex-start;
+            min-height: 2.4rem;
+            min-width: 100px;
+            border: 1px dashed rgba(180, 160, 200, 0.15);
+        }
+
+        .value.empty {
+            color: rgba(51, 71, 86, 0.3);
+            font-weight: var(--font-weight-light);
+            font-style: italic;
+            background: rgba(255, 254, 248, 0.3);
+        }
+
+        /* ============================================================
+           بخش اولین‌های من - خط زمانی
+           ============================================================ */
+        .timeline {
+            position: relative;
+            padding-right: 2.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #D4C5F9, #B8A4E0, #D4C5F9);
+            border-radius: 10px;
+            opacity: 0.4;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.8rem;
+            padding-right: 1.5rem;
+            animation: fadeContent 0.5s ease;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item .timeline-dot {
+            position: absolute;
+            right: -2.1rem;
+            top: 0.3rem;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, #D4C5F9, #B8A4E0);
+            border-radius: 50%;
+            border: 3px solid rgba(255, 254, 248, 0.8);
+            box-shadow: 0 0 0 4px rgba(180, 160, 200, 0.15);
+            z-index: 2;
+        }
+
+        .timeline-item .timeline-date {
+            font-size: 0.8rem;
+            color: var(--color-soft-brown);
+            opacity: 0.5;
+            font-weight: var(--font-weight-light);
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-item .timeline-title {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-charcoal);
+        }
+
+        .timeline-item .timeline-desc {
+            font-size: 0.95rem;
+            color: var(--color-soft-brown);
+            opacity: 0.7;
+            margin-top: 0.2rem;
+        }
+
+        /* ============================================================
+           صفحه شروع قصه
+           ============================================================ */
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 2.1;
+            font-weight: var(--font-weight-regular);
+            color: var(--color-soft-brown);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-text .big-quote {
+            display: block;
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            color: #D4C5F9;
+            opacity: 0.6;
+        }
+
+        /* ----- صفحه گالری ----- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .gallery-item {
+            background: rgba(255, 254, 248, 0.4);
+            border-radius: var(--radius-lg);
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--color-soft-brown);
+            border: 1px solid rgba(212, 197, 249, 0.2);
+            transition: all var(--transition-medium);
+            padding: 0.5rem;
+            box-shadow: 0 4px 16px rgba(160, 130, 200, 0.12);
+        }
+
+        .gallery-item:hover {
+            background: rgba(212, 197, 249, 0.2);
+            transform: scale(1.02);
+            box-shadow: 0 8px 28px rgba(160, 130, 200, 0.20);
+        }
+
+        .gallery-item .icon {
+            font-size: 3.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .gallery-item .caption {
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        /* ----- صفحه لحظه‌ها ----- */
+        .moments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .moment-item {
+            background: rgba(255, 254, 248, 0.4);
+            backdrop-filter: blur(2px);
+            border-radius: var(--radius-xl);
+            padding: 1.2rem 1.8rem;
+            border: 1px solid rgba(212, 197, 249, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all var(--transition-medium);
+            box-shadow: 0 4px 16px rgba(160, 130, 200, 0.12);
+        }
+
+        .moment-item:hover {
+            background: rgba(212, 197, 249, 0.2);
+            border-color: #D4C5F9;
+            transform: translateX(-4px);
+            box-shadow: 0 8px 28px rgba(160, 130, 200, 0.20);
+        }
+
+        .moment-item .emoji {
+            font-size: 2rem;
+            min-width: 3rem;
+        }
+
+        .moment-item .text {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-regular);
+            color: var(--color-soft-brown);
+        }
+
+        .moment-item .date {
+            margin-right: auto;
+            font-size: 0.8rem;
+            color: var(--color-soft-brown);
+            opacity: 0.5;
+            background: rgba(255, 254, 248, 0.4);
+            padding: 0.2rem 1rem;
+            border-radius: var(--radius-sm);
+        }
+
+        /* ----- صفحه گفته‌ها ----- */
+        .quotes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .quote-box {
+            background: rgba(255, 254, 248, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem 2rem;
+            border: 1px solid rgba(212, 197, 249, 0.2);
+            box-shadow: 0 4px 16px rgba(160, 130, 200, 0.12);
+            transition: all var(--transition-medium);
+        }
+
+        .quote-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(160, 130, 200, 0.20);
+            background: rgba(212, 197, 249, 0.2);
+        }
+
+        .quote-box .q {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--color-soft-brown);
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .quote-box .q::before {
+            content: "❝";
+            font-size: 2.2rem;
+            color: #D4C5F9;
+            position: absolute;
+            right: -0.5rem;
+            top: -0.5rem;
+            opacity: 0.7;
+        }
+
+        .quote-box .q::after {
+            content: "❞";
+            font-size: 2.2rem;
+            color: #D4C5F9;
+            margin-right: 0.3rem;
+            opacity: 0.7;
+        }
+
+        .quote-box .by {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--color-soft-brown);
+            opacity: 0.5;
+            text-align: left;
+        }
+
+        /* ============================================================
+           واکنش‌گرایی
+           ============================================================ */
+        @media (max-width: 768px) {
+            .cloud-float-left {
+                left: 8px;
+                bottom: 10%;
+                font-size: 3rem;
+                opacity: 0.3;
+                -webkit-text-stroke: 1.5px rgba(120, 180, 220, 0.3);
+            }
+            .cloud-float-right {
+                right: 8px;
+                top: 15%;
+                font-size: 3.5rem;
+                opacity: 0.25;
+                -webkit-text-stroke: 1.5px rgba(120, 180, 220, 0.3);
+            }
+            .cloud-float-center {
+                font-size: 2rem;
+                top: 5%;
+                opacity: 0.15;
+                -webkit-text-stroke: 1px rgba(120, 180, 220, 0.2);
+            }
+            .storybook-header .header-left h1 {
+                font-size: 2rem;
+            }
+            .storybook-header .header-right span {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.7rem;
+            }
+            #main-site {
+                padding: 0.8rem;
+            }
+            .storybook {
+                padding: 1.2rem 1.2rem;
+                border-radius: var(--radius-lg);
+            }
+            .story-nav {
+                gap: 0.4rem 0.8rem;
+                padding: 0.5rem 0.8rem;
+                border-radius: var(--radius-lg);
+            }
+            .story-nav .nav-btn {
+                font-size: 0.85rem;
+                padding: 0.3rem 1rem;
+            }
+            .story-card {
+                padding: 1.2rem 1.2rem;
+                border-radius: var(--radius-lg);
+            }
+            .memory-card {
+                padding: 1.2rem 1.2rem;
+                border-radius: var(--radius-lg);
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            .moment-item {
+                padding: 0.9rem 1.2rem;
+                flex-wrap: wrap;
+            }
+            .moment-item .date {
+                margin-right: 0;
+                width: 100%;
+            }
+            .timeline {
+                padding-right: 1.8rem;
+            }
+            .timeline-item .timeline-dot {
+                right: -1.6rem;
+                width: 14px;
+                height: 14px;
+            }
+            .cloud-wrapper {
+                width: 100px;
+                height: 72px;
+                margin-bottom: 1.5rem;
+            }
+            .story-text {
+                font-size: 1.25rem;
+                padding: 0.7rem 1.2rem;
+                min-height: 4.5rem;
+                max-width: 95%;
+                margin-bottom: 1.5rem;
+            }
+            .star {
+                font-size: 1.2rem;
+            }
+            .star:nth-child(2) {
+                font-size: 1.5rem;
+                top: -8px;
+                right: -12px;
+            }
+            .star:nth-child(3) {
+                font-size: 1.3rem;
+                bottom: -6px;
+                left: -10px;
+            }
+            .progress-container {
+                width: 260px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cloud-float-left {
+                left: 4px;
+                bottom: 8%;
+                font-size: 2rem;
+                opacity: 0.2;
+                -webkit-text-stroke: 1px rgba(120, 180, 220, 0.2);
+            }
+            .cloud-float-right {
+                right: 4px;
+                top: 12%;
+                font-size: 2.2rem;
+                opacity: 0.18;
+                -webkit-text-stroke: 1px rgba(120, 180, 220, 0.2);
+            }
+            .cloud-float-center {
+                display: none;
+            }
+            .storybook-header .header-left h1 {
+                font-size: 1.6rem;
+            }
+            .storybook-header .header-right span {
+                font-size: 0.65rem;
+                padding: 0.15rem 0.6rem;
+                white-space: normal;
+            }
+            .story-nav .nav-btn {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                gap: 0.8rem;
+            }
+            .gallery-item .icon {
+                font-size: 2.4rem;
+            }
+            .cloud-wrapper {
+                width: 80px;
+                height: 58px;
+            }
+            .story-text {
+                font-size: 1rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .star {
+                display: none;
+            }
+            .progress-container {
+                width: 200px;
+            }
+            .timeline {
+                padding-right: 1.2rem;
+            }
+            .timeline-item .timeline-dot {
+                right: -1.2rem;
+                width: 12px;
+                height: 12px;
+            }
+            .timeline-item .timeline-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ابرهای شناور ===== -->
+    <div class="cloud-float-left">☁️</div>
+    <div class="cloud-float-right">☁️</div>
+    <div class="cloud-float-center">☁️</div>
+
+    <!-- ===== لودینگ ===== -->
+    <div id="loading-screen" role="status" aria-live="polite">
+        <div class="cloud-wrapper">
+            <svg class="cloud-svg" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M30 60 C10 60 5 45 15 35 C10 25 20 15 32 18 C38 8 52 6 60 15 C68 6 82 8 88 18 C100 15 110 25 105 35 C115 45 110 60 90 60 L30 60Z"
+                fill="url(#cloudGrad)" stroke="#D1E9F6" stroke-width="0.8" stroke-linejoin="round"/>
+                <defs>
+                    <radialGradient id="cloudGrad" cx="40%" cy="35%" r="70%">
+                        <stop offset="0%" stop-color="#FFFEF8" />
+                        <stop offset="55%" stop-color="#E6E6FA" />
+                        <stop offset="100%" stop-color="#D1E9F6" />
+                    </radialGradient>
+                </defs>
+                <ellipse cx="45" cy="28" rx="10" ry="7" fill="rgba(255,254,248,0.5)" />
+                <ellipse cx="75" cy="25" rx="8" ry="5" fill="rgba(255,254,248,0.4)" />
+            </svg>
+            <span class="star">⭐</span>
+            <span class="star">🌟</span>
+            <span class="star">✨</span>
+            <span class="star">💫</span>
+        </div>
+
+        <div id="storyPhrase" class="story-text">
+            در حال ورق زدن صفحات خاطرات...
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <span class="progress-label" id="progressLabel">۰٪</span>
+        </div>
+    </div>
+
+    <!-- ===== صفحه اصلی ===== -->
+    <div id="main-site">
+        <div class="storybook">
+
+            <!-- ===== هدر با عبارت سمت راست ===== -->
+            <header class="storybook-header">
+                <div class="header-row">
+                    <div class="header-left">
+                        <h1>📖 My Story</h1>
+                    </div>
+                    <div class="header-right">
+                        <span>✦ از اولین نفس تا اولین قدم ✦</span>
+                    </div>
+                </div>
+                <p class="subtitle">
+                    <span>✦ دفترچه خاطرات یک قصه‌ی شیرین ✦</span>
+                </p>
+            </header>
+
+            <!-- ===== نوار ناوبری ===== -->
+            <nav class="story-nav">
+                <button class="nav-btn active" data-page="page-intro">شروع قصه</button>
+                <button class="nav-btn" data-page="page-profile">مشخصات من</button>
+                <button class="nav-btn" data-page="page-firsts">اولین‌های من</button>
+                <button class="nav-btn" data-page="page-gallery">گالری</button>
+                <button class="nav-btn" data-page="page-moments">لحظه‌ها</button>
+                <button class="nav-btn" data-page="page-quotes">گفته‌ها</button>
+            </nav>
+
+            <!-- ====== صفحات ====== -->
+
+            <!-- ===== صفحه شروع قصه ===== -->
+            <div id="page-intro" class="story-page active">
+                
+                <div class="memory-card" onclick="toggleMemory(this)">
+                    <div class="card-title">
+                        <span class="emoji">🌟</span> و اما شروع یک قصه زیبا…
+                    </div>
+                    <div class="card-sub">✨ برای خواندن کلیک کنید ✨</div>
+                    
+                    <div class="card-content">
+                        <p style="font-size:1.15rem; line-height:2.1; color:var(--color-soft-brown); text-align:center; max-width:750px; margin:0 auto;">
+                            «سلام! من تازه رسیدم! ✨🍼
+                            <br><br>
+                            راستش را بخواهی، هنوز زبانم را یاد نگرفته‌ام که با شما حرف بزنم، و گاهی فقط می‌توانم با گریه کردن یا لبخند زدن به شما جواب بدهم… 👶🏻 اما نگر نباشید! ☁️
+                            <br><br>
+                            من با چشم‌های کوچکم دارم همه‌چیز را تماشا می‌کنم: لبخندهای شما، بوسه‌هایتان و آن دست‌های گرمی که مرا می‌گیرند… 💖 من شاید نتوانم بگویم "سلام"، اما هر بار که به شما نگاه می‌کنم، انگار دارم با تمام دنیا می‌گویم: "چقدر جای قشنگی است!" 🌈
+                            <br><br>
+                            منتظر باشید، زود بزرگ می‌شوم و آن وقت کلی حرف‌های بامزه برایتان دارم! 🐥🎈»
+                        </p>
+                        <button class="close-btn" onclick="event.stopPropagation(); closeMemory(this)">بستن</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===== صفحه مشخصات من ===== -->
+            <div id="page-profile" class="story-page">
+                <div class="story-card" style="cursor:default;">
+                    <div class="card-title">
+                        <span class="emoji">🌟</span> مشخصات من
+                    </div>
+                    <div class="profile-grid">
+                        <div class="profile-item">
+                            <span class="label">🌙 لحظه ورود به زندگی</span>
+                            <span class="value empty">......</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="label">✨ زمانی که دنیا زیباتر شد</span>
+                            <span class="value empty">......</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="label">☁️ وزن آرامش من</span>
+                            <span class="value empty">......</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="label">⭐ جایی که داستانم شروع شد</span>
+                            <span class="value empty">......</span>
+                        </div>
+                        <div class="profile-item" style="grid-column: 1 / -1;">
+                            <span class="label">💫 همراهان همیشگی من</span>
+                            <span class="value empty">......</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== صفحه اولین‌های من ===== -->
+            <div id="page-firsts" class="story-page">
+                <div class="story-card">
+                    <div class="card-title">
+                        <span class="emoji">🏆</span> اولین‌های من
+                    </div>
+                    
+                    <div class="timeline">
+                        
+                        <!-- اولین دیده به جهان -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">📅 [تاریخ تولد را وارد کنید]</div>
+                            <div class="timeline-title">🌟 اولین دیده به جهان</div>
+                            <div class="timeline-desc">لحظه‌ای که چشمانت را به روی این دنیای زیبا گشودی</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== صفحه گالری ===== -->
+            <div id="page-gallery" class="story-page">
+                <div class="story-card">
+                    <div class="card-title">
+                        <span class="emoji">📸</span> تصویرِ لبخندها
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item"><span class="icon">🌸</span><span class="caption">نگاه اول</span></div>
+                        <div class="gallery-item"><span class="icon">☀️</span><span class="caption">نور صبح</span></div>
+                        <div class="gallery-item"><span class="icon">🌙</span><span class="caption">شب‌های نرم</span></div>
+                        <div class="gallery-item"><span class="icon">🍃</span><span class="caption">قدم‌های کوچک</span></div>
+                        <div class="gallery-item"><span class="icon">💫</span><span class="caption">رویای شیرین</span></div>
+                        <div class="gallery-item"><span class="icon">🧸</span><span class="caption">همبازی</span></div>
+                        <div class="gallery-item"><span class="icon">🌈</span><span class="caption">رنگین‌کمان</span></div>
+                        <div class="gallery-item"><span class="icon">🦋</span><span class="caption">پرواز</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== صفحه لحظه‌ها ===== -->
+<div id="page-moments" class="story-page">
+    
+    <div class="memory-card" onclick="toggleMemory(this)">
+        <div class="card-title">
+            <span class="emoji">✨</span> اولین نفسِ گرم و شیرین…
+        </div>
+        <div class="card-sub">✨ برای خواندن کلیک کنید ✨</div>
+        
+        <div class="card-content">
+            <p style="font-size:1.15rem; line-height:2.1; color:var(--color-soft-brown); text-align:center; max-width:750px; margin:0 auto;">
+                زمانی که برای اولین بار ریه‌های کوچکت را با هوای دنیا پر کردی، انگار زمان ایستاد. صدای اولین نفس‌هایت، زیباترین موسیقی‌ای بود که تا به حال شنیده بودم. خوش آمدی به این جهانِ پر از عشق.
+            </p>
+            <div style="text-align:center; margin-top:1rem; font-size:0.9rem; color:var(--color-soft-brown); opacity:0.5;">
+                📅 [زمان را وارد کنید]
+            </div>
+            <button class="close-btn" onclick="event.stopPropagation(); closeMemory(this)">بستن</button>
+        </div>
+    </div>
+
+</div>
+
+            <!-- ===== صفحه گفته‌ها ===== -->
+            <div id="page-quotes" class="story-page">
+                
+                <div class="memory-card" onclick="toggleMemory(this)">
+                    <div class="card-title">
+                        <span class="emoji">❤️</span> نخستین واژه‌های عشق…
+                    </div>
+                    <div class="card-sub">✨ برای خواندن کلیک کنید ✨</div>
+                    
+                    <div class="card-content">
+                        
+                        <!-- پیام پدر -->
+                        <div class="quote-item">
+                            <div class="q">
+                                «کوچولوی من، تو شاید هنوز نمی‌دانی چقدر دنیا را تغییر دادی، اما از همین امروز بدان که من همیشه پشتِ تو هستم. قرار است با هم کلی ماجراجویی کنیم، کلی خندیدن را یاد بگیریم و من همیشه تماشاگر بزرگ‌ترین قهرمان‌های زندگی‌ات خواهم بود. قهرمان کوچک من! 🛡️💙»
+                            </div>
+                            <div class="by">— پدر</div>
+                        </div>
+                        
+                        <!-- پیام مادر -->
+                        <div class="quote-item">
+                            <div class="q">
+                                «عزیزم، تو تنها یک فرزند نیستی؛ تو همان قطعه‌ای از قلب منی که حالا بیرون از سینه‌ام می‌تپد. آمدنت یعنی شروع زیباترین فصل زندگی من. قول می‌دهم همیشه در کنارت باشم تا تو هم همیشه با لبخند، دنیا را زیبا کنی. دوستت دارم، فرشته کوچولوی من. ❤️🤱»
+                            </div>
+                            <div class="by">— مادر</div>
+                        </div>
+                        
+                        <button class="close-btn" onclick="event.stopPropagation(); closeMemory(this)">بستن</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== JavaScript ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ====== ۱. لودینگ ======
+
+            const phrases = [
+                'در حال ورق زدن صفحات خاطرات...',
+                'در حال آماده کردن داستان‌ها...',
+                'یک لحظه صبر کن، قصه در حال آماده شدن است...',
+                'در حال جمع‌آوری لحظه‌های شیرین...'
+            ];
+
+            const phraseElement = document.getElementById('storyPhrase');
+            const progressFill = document.getElementById('progressFill');
+            const progressLabel = document.getElementById('progressLabel');
+
+            let phraseIndex = 0;
+            let phraseInterval = null;
+            let progress = 0;
+            let progressInterval = null;
+            let isComplete = false;
+
+            function rotatePhrase() {
+                if (!phraseElement) return;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                phraseElement.style.opacity = '0.25';
+                setTimeout(() => {
+                    phraseElement.textContent = phrases[phraseIndex];
+                    phraseElement.style.opacity = '1';
+                }, 180);
+            }
+
+            function startPhraseRotation() {
+                if (phraseInterval) clearInterval(phraseInterval);
+                if (phraseElement) {
+                    phraseElement.textContent = phrases[0];
+                    phraseElement.style.opacity = '1';
+                }
+                phraseInterval = setInterval(rotatePhrase, 2000);
+            }
+
+            function updateProgress() {
+                const increment = 1 + Math.random() * 3;
+                progress = Math.min(progress + increment, 100);
+                progressFill.style.width = progress + '%';
+                progressLabel.textContent = Math.round(progress) + '%';
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                    completeLoading();
+                }
+            }
+
+            function showMainSite() {
+                const mainSite = document.getElementById('main-site');
+                if (mainSite) {
+                    mainSite.classList.add('show');
+                }
+            }
+
+            function completeLoading() {
+                if (isComplete) return;
+                isComplete = true;
+
+                if (phraseInterval) {
+                    clearInterval(phraseInterval);
+                    phraseInterval = null;
+                }
+
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.classList.add('fade-out');
+                }
+
+                setTimeout(() => {
+                    showMainSite();
+                }, 400);
+
+                setTimeout(() => {
+                    if (loadingScreen && loadingScreen.parentNode) {
+                        loadingScreen.style.display = 'none';
+                    }
+                }, 1500);
+            }
+
+            function startLoading() {
+                startPhraseRotation();
+
+                progress = 0;
+                progressFill.style.width = '0%';
+                progressLabel.textContent = '۰٪';
+
+                if (progressInterval) {
+                    clearInterval(progressInterval);
+                }
+
+                setTimeout(() => {
+                    progressInterval = setInterval(updateProgress, 120);
+                }, 400);
+
+                const safetyTimer = setTimeout(() => {
+                    if (!isComplete) {
+                        progress = 100;
+                        progressFill.style.width = '100%';
+                        progressLabel.textContent = '۱۰۰%';
+                        completeLoading();
+                    }
+                }, 7000);
+
+                const originalComplete = completeLoading;
+                completeLoading = function() {
+                    clearTimeout(safetyTimer);
+                    originalComplete.call(this);
+                };
+            }
+
+            startLoading();
+
+            window.addEventListener('load', function() {
+                if (!isComplete && progress < 85) {
+                    if (progressInterval) {
+                        clearInterval(progressInterval);
+                    }
+                    progressInterval = setInterval(function() {
+                        const increment = 2 + Math.random() * 5;
+                        progress = Math.min(progress + increment, 100);
+                        progressFill.style.width = progress + '%';
+                        progressLabel.textContent = Math.round(progress) + '%';
+                        if (progress >= 100) {
+                            clearInterval(progressInterval);
+                            progressInterval = null;
+                            completeLoading();
+                        }
+                    }, 80);
+                }
+            });
+
+            // ====== ۲. ناوبری ======
+
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const pages = {
+                'page-intro': document.getElementById('page-intro'),
+                'page-profile': document.getElementById('page-profile'),
+                'page-firsts': document.getElementById('page-firsts'),
+                'page-gallery': document.getElementById('page-gallery'),
+                'page-moments': document.getElementById('page-moments'),
+                'page-quotes': document.getElementById('page-quotes')
+            };
+
+            function switchPage(pageId) {
+                Object.values(pages).forEach(page => {
+                    if (page) page.classList.remove('active');
+                });
+                const target = pages[pageId];
+                if (target) target.classList.add('active');
+
+                navBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.page === pageId) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const pageId = this.dataset.page;
+                    if (pageId && pages[pageId]) {
+                        switchPage(pageId);
+                    }
+                });
+            });
+
+            window.addEventListener('hashchange', function() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && pages[hash]) {
+                    switchPage(hash);
+                }
+            });
+
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && pages[initialHash]) {
+                switchPage(initialHash);
+            }
+
+            window.__switchPage = switchPage;
+
+            // ====== ۳. توابع باز و بسته کردن کارت خاطره ======
+
+            window.toggleMemory = function(element) {
+                const content = element.querySelector('.card-content');
+                if (content) {
+                    content.classList.toggle('open');
+                }
+            };
+
+            window.closeMemory = function(btn) {
+                const card = btn.closest('.memory-card');
+                if (card) {
+                    const content = card.querySelector('.card-content');
+                    if (content) {
+                        content.classList.remove('open');
+                    }
+                }
+            };
+
+        })();
+    </script>
+
+</body>
+</html>
