@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🚀ماجراجویی در سرزمین دانش</title>
+    <style>
+        /* ============================================================ */
+        /* استایل‌های اصلی بازی (همون قبلی ولی با تغییرات ربات) */
+        /* ============================================================ */
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        body.win-effect {
+            background: linear-gradient(135deg, #1a1a2e, #f7971e, #ffd200) !important;
+            animation: winPulse 0.8s ease 3;
+        }
+
+        @keyframes winPulse {
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        body.lose-effect {
+            animation: loseShake 0.6s ease;
+        }
+
+        @keyframes loseShake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-20px) rotate(-2deg);
+            }
+            40% {
+                transform: translateX(20px) rotate(2deg);
+            }
+            60% {
+                transform: translateX(-10px);
+            }
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-size: 40px;
+            animation: sparkleFade 0.8s ease forwards;
+        }
+
+        @keyframes sparkleFade {
+            0% {
+                transform: scale(0.5) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2) rotate(180deg) translateY(-80px);
+                opacity: 0;
+            }
+        }
+
+        .game-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .game-title {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(247, 151, 30, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .game-stats span {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .game-stats .score {
+            color: #ffd700;
+            font-weight: 700;
+        }
+
+        .age-selector {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .age-btn {
+            padding: 8px 22px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .age-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .age-btn.active {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            border-color: #ffd200;
+            color: #1a1a2e;
+            box-shadow: 0 8px 25px rgba(247, 151, 30, 0.35);
+            transform: scale(1.05);
+        }
+
+        .question-area {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s ease;
+        }
+
+        .question-emoji {
+            font-size: 56px;
+            margin-bottom: 12px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .question-text {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .question-hint {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .option-btn {
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.85);
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .option-btn.correct {
+            background: rgba(46, 213, 115, 0.3);
+            border-color: #2ed573;
+            box-shadow: 0 0 40px rgba(46, 213, 115, 0.2);
+            animation: popCorrect 0.5s ease;
+        }
+
+        .option-btn.wrong {
+            background: rgba(255, 71, 87, 0.3);
+            border-color: #ff4757;
+            animation: shake 0.5s ease;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        @keyframes popCorrect {
+            0% {
+                transform: scale(1);
+            }
+            30% {
+                transform: scale(1.15);
+            }
+            60% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-12px) rotate(-3deg);
+            }
+            40% {
+                transform: translateX(12px) rotate(3deg);
+            }
+            60% {
+                transform: translateX(-6px);
+            }
+            80% {
+                transform: translateX(6px);
+            }
+        }
+
+        .next-btn {
+            display: none;
+            margin: 20px auto 0;
+            padding: 14px 50px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a2e;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(247, 151, 30, 0.25);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(247, 151, 30, 0.4);
+        }
+
+        .next-btn.show {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .finish-message {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .finish-message.show {
+            display: block;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .finish-message .big-emoji {
+            font-size: 72px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .finish-message h2 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .finish-message p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+        }
+
+        .restart-btn {
+            margin-top: 18px;
+            padding: 12px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            background: transparent;
+            color: #fff;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f7971e, #ffd200);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* ============================================================ */
+        /* استایل‌های ربات هوشمند (بدون دکمه) */
+        /* ============================================================ */
+        .game-friend {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            animation: friendFloat 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .friend-avatar {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(145deg, #4a6fa5, #2c3e6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 8px 35px rgba(44, 62, 107, 0.5), inset 0 -3px 8px rgba(0, 0, 0, 0.3), inset 0 3px 8px rgba(255,
+                    255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+        }
+
+        .friend-avatar:hover {
+            transform: scale(1.1) rotate(-8deg);
+        }
+
+        .robot-antenna {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to top, #7f8c8d, #bdc3c7);
+            border-radius: 2px;
+        }
+
+        .antenna-light {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            animation: antennaBlink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes antennaBlink {
+            0%,
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: translateX(-50%) scale(0.7);
+            }
+        }
+
+        .friend-status {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            background: #2ed573;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(46, 213, 115, 0.3);
+        }
+
+        .friend-status.happy {
+            background: #ffd700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            animation: pulse 0.6s ease infinite;
+        }
+
+        .friend-status.sad {
+            background: #ff4757;
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.5);
+            animation: shake 0.4s ease;
+        }
+
+        .friend-status.thinking {
+            background: #4ecdc4;
+            box-shadow: 0 0 25px rgba(78, 205, 196, 0.5);
+            animation: pulse 1s ease infinite;
+        }
+
+        .friend-status.excited {
+            background: #ff6b6b;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+            animation: pulse 0.3s ease infinite;
+        }
+
+        .friend-status.helping {
+            background: #a29bfe;
+            box-shadow: 0 0 25px rgba(162, 155, 254, 0.5);
+            animation: pulse 0.8s ease infinite;
+        }
+
+        .friend-bubble {
+            background: rgba(30, 40, 60, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 20px 20px 20px 5px;
+            padding: 14px 20px;
+            max-width: 290px;
+            border: 2px solid rgba(78, 205, 196, 0.3);
+            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: all 0.4s ease;
+            animation: bubbleAppear 0.4s ease;
+        }
+
+        .friend-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            right: -14px;
+            border: 8px solid transparent;
+            border-right-color: rgba(30, 40, 60, 0.95);
+            border-left: 0;
+        }
+
+        .friend-text {
+            font-family: 'Vazirmatn', 'Courier New', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: #a8e6cf;
+            display: block;
+            line-height: 1.7;
+            min-height: 24px;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.1);
+            letter-spacing: 0.3px;
+        }
+
+        .friend-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            margin-right: 4px;
+            animation: dotPulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .friend-dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        .friend-dot:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes friendFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes bubbleAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-6px);
+            }
+            75% {
+                transform: translateX(6px);
+            }
+        }
+
+        @keyframes dotPulse {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .game-friend.happy .friend-avatar {
+            animation: happyJump 0.6s ease;
+        }
+
+        @keyframes happyJump {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-25px) scale(1.1);
+            }
+            60% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .game-friend.sad .friend-avatar {
+            animation: sadShake 0.5s ease;
+        }
+
+        @keyframes sadShake {
+            0%,
+            100% {
+                transform: rotate(0);
+            }
+            25% {
+                transform: rotate(-12deg);
+            }
+            75% {
+                transform: rotate(12deg);
+            }
+        }
+
+        .game-friend.excited .friend-avatar {
+            animation: excitedSpin 0.8s ease;
+        }
+
+        @keyframes excitedSpin {
+            0% {
+                transform: rotate(0) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.2);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        .game-friend.thinking .friend-avatar {
+            animation: thinkPulse 1s ease infinite;
+        }
+
+        @keyframes thinkPulse {
+            0%,
+            100% {
+                transform: scale(1) rotate(0);
+            }
+            50% {
+                transform: scale(0.95) rotate(-5deg);
+            }
+        }
+
+        .game-friend.helping .friend-avatar {
+            animation: helpingPulse 0.8s ease infinite;
+        }
+
+        @keyframes helpingPulse {
+            0%,
+            100% {
+                transform: scale(1) rotate(0);
+            }
+            50% {
+                transform: scale(1.05) rotate(3deg);
+            }
+        }
+
+        .game-friend.happy .antenna-light {
+            animation: antennaHappy 0.5s ease infinite;
+        }
+
+        @keyframes antennaHappy {
+            0%,
+            100% {
+                background: #ffd700;
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+            }
+            50% {
+                background: #ff6b6b;
+                box-shadow: 0 0 40px rgba(255, 107, 107, 0.8);
+            }
+        }
+
+        .game-friend.sad .antenna-light {
+            animation: antennaSad 0.4s ease;
+        }
+
+        @keyframes antennaSad {
+            0%,
+            100% {
+                background: #ff4757;
+                box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+            }
+            50% {
+                background: #ff6b6b;
+                box-shadow: 0 0 10px rgba(255, 71, 87, 0.2);
+            }
+        }
+
+        .game-friend.excited .antenna-light {
+            animation: antennaExcited 0.2s ease infinite;
+        }
+
+        @keyframes antennaExcited {
+            0%,
+            100% {
+                background: #ffd700;
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.9);
+            }
+            50% {
+                background: #ff6b6b;
+                box-shadow: 0 0 50px rgba(255, 107, 107, 0.9);
+            }
+        }
+
+        .game-friend.helping .antenna-light {
+            animation: antennaHelping 0.6s ease infinite;
+        }
+
+        @keyframes antennaHelping {
+            0%,
+            100% {
+                background: #a29bfe;
+                box-shadow: 0 0 30px rgba(162, 155, 254, 0.6);
+            }
+            50% {
+                background: #6c5ce7;
+                box-shadow: 0 0 50px rgba(108, 92, 231, 0.8);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 18px;
+                border-radius: 28px;
+            }
+            .game-title {
+                font-size: 18px;
+            }
+            .question-text {
+                font-size: 18px;
+            }
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .option-btn {
+                font-size: 15px;
+                padding: 12px 14px;
+            }
+            .age-btn {
+                font-size: 12px;
+                padding: 6px 16px;
+            }
+            .question-emoji {
+                font-size: 40px;
+            }
+            .friend-avatar {
+                width: 62px;
+                height: 62px;
+                font-size: 34px;
+            }
+            .friend-bubble {
+                max-width: 210px;
+                padding: 10px 14px;
+            }
+            .friend-text {
+                font-size: 13px;
+            }
+            .game-friend {
+                bottom: 15px;
+                right: 15px;
+                gap: 8px;
+            }
+            .robot-antenna {
+                height: 16px;
+                top: -14px;
+            }
+            .antenna-light {
+                width: 10px;
+                height: 10px;
+                top: -6px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .game-stats {
+                font-size: 12px;
+                gap: 10px;
+            }
+            .game-stats span {
+                padding: 4px 10px;
+            }
+            .friend-avatar {
+                width: 52px;
+                height: 52px;
+                font-size: 28px;
+            }
+            .friend-bubble {
+                max-width: 170px;
+                padding: 8px 12px;
+            }
+            .friend-text {
+                font-size: 12px;
+            }
+            .friend-status {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- کنفتی برای افکت‌ها -->
+    <!-- ============================================================ -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- ============================================================ -->
+    <!-- بازی اصلی -->
+    <!-- ============================================================ -->
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-title">🚀 سرزمین دانش</div>
+            <div class="game-stats">
+                <span>⭐ <span class="score" id="scoreDisplay">۰</span></span>
+                <span>📚 <span id="questionCounter">۱</span>/<span id="totalQuestions">۱۳</span></span>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="age-selector" id="ageSelector">
+            <button class="age-btn" data-age="3">👶 ۳–۴ سال</button>
+            <button class="age-btn" data-age="5">🧒 ۵–۶ سال</button>
+            <button class="age-btn active" data-age="7">🧑 ۷–۸ سال</button>
+            <button class="age-btn" data-age="9">🦸 ۹–۱۰ سال</button>
+        </div>
+
+        <div class="question-area" id="questionArea">
+            <div class="question-emoji" id="questionEmoji">🧩</div>
+            <div class="question-text" id="questionText">کدام یک از این‌ها قرمز است؟</div>
+            <div class="question-hint" id="questionHint">یک گزینه را انتخاب کن</div>
+            <div class="options-grid" id="optionsGrid">
+                <button class="option-btn" data-index="0">🍎 سیب</button>
+                <button class="option-btn" data-index="1">🍌 موز</button>
+                <button class="option-btn" data-index="2">🍇 انگور</button>
+                <button class="option-btn" data-index="3">🥒 خیار</button>
+            </div>
+            <button class="next-btn" id="nextBtn">سوال بعدی ➜</button>
+        </div>
+
+        <div class="finish-message" id="finishMessage">
+            <span class="big-emoji">🏆</span>
+            <h2>آفرین! ماجراجویی تموم شد!</h2>
+            <p>امتیاز نهایی: <strong id="finalScore">۰</strong> ⭐</p>
+            <button class="restart-btn" id="restartBtn">🔁 دوباره بازی کن</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 🎵 سیستم صوتی
+        // ============================================================
+        const AudioSystem = {
+            ctx: null,
+
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new(window.AudioContext || window.webkitAudioContext)();
+                }
+                return this.ctx;
+            },
+
+            playWin() {
+                const ctx = this.init();
+                const now = ctx.currentTime;
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                const durations = [0.15, 0.15, 0.15, 0.25];
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.3, now + i * 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.12 + durations[i]);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + i * 0.12);
+                    osc.stop(now + i * 0.12 + durations[i]);
+                });
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(1200, now);
+                osc2.frequency.exponentialRampToValueAtTime(800, now + 0.3);
+                gain2.gain.setValueAtTime(0.08, now);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now);
+                osc2.stop(now + 0.3);
+            },
+
+            playLose() {
+                const ctx = this.init();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(120, now + 0.4);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.4);
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'square';
+                osc2.frequency.value = 150;
+                gain2.gain.setValueAtTime(0.08, now + 0.15);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now + 0.15);
+                osc2.stop(now + 0.35);
+                const bufferSize = ctx.sampleRate * 0.2;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / bufferSize * 3);
+                }
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+                const gain3 = ctx.createGain();
+                gain3.gain.setValueAtTime(0.06, now);
+                gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                noise.connect(gain3);
+                gain3.connect(ctx.destination);
+                noise.start(now);
+                noise.stop(now + 0.2);
+            },
+
+            playCelebration() {
+                const ctx = this.init();
+                const now = ctx.currentTime;
+                const notes = [523, 587, 659, 784, 880, 988, 1047];
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.12, now + i * 0.07);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.12);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + i * 0.07);
+                    osc.stop(now + i * 0.07 + 0.12);
+                });
+            }
+        };
+
+        // ============================================================
+        // 📚 دیتابیس سوالات
+        // ============================================================
+        const QUESTIONS_BY_AGE = {
+            3: [
+                { emoji: '🔴', question: 'کدوم رنگ قرمز هست؟', options: ['🍎 سیب', '🍌 موز', '🌤️ آسمان', '🌿 علف'], correct: 0 },
+                { emoji: '🔵', question: 'کدوم شکل گرد هست؟', options: ['📦 جعبه', '⚽ توپ', '📐 خط‌کش', '🔺 مثلث'], correct: 1 },
+                { emoji: '🐱', question: 'کدوم یکی حیوونه؟', options: ['🚗 ماشین', '🐱 گربه', '🏠 خونه', '📚 کتاب'], correct: 1 },
+                { emoji: '🔢', question: 'عدد ۳ رو پیدا کن', options: ['۲', '۳', '۴', '۵'], correct: 1 },
+                { emoji: '🐶', question: 'کدوم یکی پارس می‌کنه؟', options: ['🐱 گربه', '🐶 سگ', '🐮 گاو', '🐴 اسب'], correct: 1 },
+                { emoji: '🍕', question: 'کدوم یکی خوردنی‌ست؟', options: ['🪑 صندلی', '📱 گوشی', '🍕 پیتزا', '✏️ مداد'],
+                correct: 2 },
+                { emoji: '⬆️', question: 'کدوم جهت بالا هست؟', options: ['⬆️', '⬇️', '⬅️', '➡️'], correct: 0 },
+                { emoji: '🌤️', question: 'کدوم یکی تو آسمونه؟', options: ['🌤️ خورشید', '🐟 ماهی', '🌳 درخت', '🏔️ کوه'],
+                    correct: 0 },
+                { emoji: '🚗', question: 'کدوم یکی چرخ داره؟', options: ['🚗 ماشین', '📖 کتاب', '🪑 صندلی', '🍎 سیب'],
+                correct: 0 },
+                { emoji: '👶', question: 'کدوم یکی کوچیکه؟', options: ['🏢 ساختمان', '👶 بچه', '🐘 فیل', '🌍 زمین'], correct: 1 },
+                { emoji: '🌿', question: 'کدوم یکی سبزه؟', options: ['🌿 علف', '☀️ خورشید', '🌊 آب', '🏔️ برف'], correct: 0 },
+                { emoji: '🐄', question: 'کدوم یکی شیر میده؟', options: ['🐔 مرغ', '🐄 گاو', '🐑 گوسفند', '🐴 اسب'], correct: 1 },
+                { emoji: '☀️', question: 'چی باعث روشنایی روز میشه؟', options: ['🌙 ماه', '☀️ خورشید', '⭐ ستاره', '💡 لامپ'],
+                    correct: 1 },
+            ],
+            5: [
+                { emoji: '🧮', question: '۲ + ۳ چند می‌شه؟', options: ['۴', '۵', '۶', '۷'], correct: 1 },
+                { emoji: '🔤', question: 'کدوم حرف اول الفباست؟', options: ['ب', 'پ', 'الف', 'ت'], correct: 2 },
+                { emoji: '☂️', question: 'برای بارون چی می‌پوشیم؟', options: ['👕 تی‌شرت', '🩳 شورت', '🧥 کاپشن', '☂️ چتر'],
+                    correct: 3 },
+                { emoji: '🐄', question: 'کدوم یکی شیر میده؟', options: ['🐔 مرغ', '🐄 گاو', '🐑 گوسفند', '🐴 اسب'], correct: 1 },
+                { emoji: '📏', question: 'کدوم بلندترینه؟', options: ['🐜 مورچه', '🦒 زرافه', '🐱 گربه', '🐭 موش'], correct: 1 },
+                { emoji: '🎨', question: 'رنگ سفید رو پیدا کن', options: ['⚫ سیاه', '⚪ سفید', '🔴 قرمز', '🟢 سبز'], correct: 1 },
+                { emoji: '🧊', question: 'چی رو تو یخچال می‌ذاریم؟', options: ['🧊 یخ', '📺 تلویزیون', '🛏️ تخت', '🚪 در'],
+                    correct: 0 },
+                { emoji: '🎵', question: 'کدوم یکی صدا داره؟', options: ['📺 تلویزیون', '🎵 رادیو', '🪑 صندلی', '📚 کتاب'],
+                    correct: 1 },
+                { emoji: '🚲', question: 'چند تا چرخ داره دوچرخه؟', options: ['۱', '۲', '۳', '۴'], correct: 1 },
+                { emoji: '⭐', question: 'کدوم یکی تو شب می‌درخشه؟', options: ['☀️ خورشید', '⭐ ستاره', '🌳 درخت', '🏠 خونه'],
+                    correct: 1 },
+                { emoji: '🌿', question: 'کدوم یکی گیاهه؟', options: ['🌿 علف', '🪨 سنگ', '🌤️ آسمان', '💧 آب'], correct: 0 },
+                { emoji: '🐟', question: 'کدوم یکی تو آب زندگی می‌کنه؟', options: ['🐟 ماهی', '🐱 گربه', '🐶 سگ', '🐮 گاو'],
+                    correct: 0 },
+                { emoji: '🏠', question: 'کدوم یکی خونه‌ست؟', options: ['🏠', '🚗', '✈️', '🚢'], correct: 0 },
+            ],
+            7: [
+                { emoji: '🧮', question: '۱۲ + ۸ چند می‌شه؟', options: ['۱۸', '۱۹', '۲۰', '۲۱'], correct: 2 },
+                { emoji: '🌍', question: 'کدوم یکی سیاره‌ست؟', options: ['🌙 ماه', '☀️ خورشید', '🌍 زمین', '⭐ ستاره'],
+                    correct: 2 },
+                { emoji: '📖', question: 'کدوم یکی داستان داره؟', options: ['📖 کتاب', '🪑 میز', '🚪 در', '💡 لامپ'], correct: 0 },
+                { emoji: '🕷️', question: 'چند تا پا داره عنکبوت؟', options: ['۴', '۶', '۸', '۱۰'], correct: 2 },
+                { emoji: '🗣️', question: 'کدوم یکی زبان فارسی نیست؟', options: ['فارسی', 'انگلیسی', 'عربی', 'همه فارسی هستن'],
+                    correct: 3 },
+                { emoji: '🧪', question: 'آب در چه دمایی می‌جوشه؟', options: ['۵۰°', '۸۰°', '۱۰۰°', '۱۲۰°'], correct: 2 },
+                { emoji: '📐', question: 'زاویه قائم چند درجه است؟', options: ['۴۵°', '۶۰°', '۹۰°', '۱۸۰°'], correct: 2 },
+                { emoji: '🕰️', question: 'یک روز چند ساعت دارد؟', options: ['۱۲', '۱۸', '۲۴', '۳۰'], correct: 2 },
+                { emoji: '🧠', question: 'کدوم عضو برای فکر کردنه؟', options: ['💓 قلب', '🧠 مغز', '🫁 ریه', '👀 چشم'],
+                    correct: 1 },
+                { emoji: '🌱', question: 'برای رشد گیاه چی لازمه؟', options: ['☀️ نور', '💧 آب', '🌿 خاک', 'همه موارد'],
+                    correct: 3 },
+                { emoji: '🌤️', question: 'آسمون چه رنگیه؟', options: ['🌤️ آبی', '🌿 سبز', '🔴 قرمز', '⚫ سیاه'], correct: 0 },
+                { emoji: '🌿', question: 'کدوم یکی اکسیژن تولید می‌کنه؟', options: ['🌿 گیاهان', '🪨 سنگ', '💧 آب', '🌤️ آسمون'],
+                    correct: 0 },
+                { emoji: '⚡', question: 'کدوم یکی انرژی میده؟', options: ['⚡ برق', '🪨 سنگ', '🌿 علف', '💧 آب'], correct: 0 },
+            ],
+            9: [
+                { emoji: '🧮', question: '۴۵ × ۳ چند می‌شه؟', options: ['۱۲۵', '۱۳۰', '۱۳۵', '۱۴۰'], correct: 2 },
+                { emoji: '🌌', question: 'کهکشان راه شیری چه شکلیه؟', options: ['بیضی', 'مارپیچ', 'دایره', 'مثلث'], correct: 1 },
+                { emoji: '💻', question: 'کدوم یکی زبان برنامه‌نویسی نیست؟', options: ['پایتون', 'جاوااسکریپت', 'اسپانیایی',
+                        'سی‌پلاس‌پلاس'
+                    ], correct: 2 },
+                { emoji: '🧬', question: 'DNA مخفف چیه؟', options: ['دی‌ان‌ای', 'دئوکسی‌ریبونوکلئیک اسید', 'هر دو',
+                        'هیچ‌کدوم'
+                    ], correct: 2 },
+                { emoji: '⚛️', question: 'کوچک‌ترین ذره سازنده ماده کدام است؟', options: ['مولکول', 'اتم', 'الکترون', 'پروتون'],
+                    correct: 1 },
+                { emoji: '🌍', question: 'چند درصد سطح زمین آب است؟', options: ['۳۰٪', '۵۰٪', '۷۰٪', '۹۰٪'], correct: 2 },
+                { emoji: '📜', question: 'قدیمی‌ترین خط دنیا کدام است؟', options: ['خط میخی', 'هیروگلیف', 'فارسی باستان', 'چینی'],
+                    correct: 0 },
+                { emoji: '🎭', question: 'تراژدی یعنی چی؟', options: ['کمدی', 'بازی غم‌انگیز', 'داستان عاشقانه', 'تاریخی'],
+                    correct: 1 },
+                { emoji: '⚡', question: 'سرعت نور چند کیلومتر بر ثانیه است؟', options: ['۳۰۰', '۳٬۰۰۰', '۳۰٬۰۰۰',
+                        '۳۰۰٬۰۰۰'
+                    ], correct: 3 },
+                { emoji: '🧠', question: 'چند درصد مغز انسان آب است؟', options: ['۵۰٪', '۶۵٪', '۷۵٪', '۸۵٪'], correct: 2 },
+                { emoji: '🌤️', question: 'لایه ازن در کجاست؟', options: ['🌤️ جو', '🌿 زمین', '💧 دریا', '🏔️ کوه'], correct: 0 },
+                { emoji: '🌿', question: 'فتوسنتز یعنی چی؟', options: ['🌿 ساخت غذا توسط گیاه', '🌤️ تنفس', '💧 تبخیر',
+                        '🏔️ فرسایش'
+                    ], correct: 0 },
+                { emoji: '🧪', question: 'pH خون انسان چند است؟', options: ['۵', '۷.۴', '۹', '۱۲'], correct: 1 },
+            ]
+        };
+
+        // ============================================================
+        // 🎮 وضعیت بازی
+        // ============================================================
+        let currentAge = 7;
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        const questionEmoji = document.getElementById('questionEmoji');
+        const questionText = document.getElementById('questionText');
+        const questionHint = document.getElementById('questionHint');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const nextBtn = document.getElementById('nextBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const questionCounter = document.getElementById('questionCounter');
+        const totalQuestions = document.getElementById('totalQuestions');
+        const finishMessage = document.getElementById('finishMessage');
+        const finalScore = document.getElementById('finalScore');
+        const restartBtn = document.getElementById('restartBtn');
+        const questionArea = document.getElementById('questionArea');
+        const progressFill = document.getElementById('progressFill');
+        const ageBtns = document.querySelectorAll('.age-btn');
+        const confettiContainer = document.getElementById('confettiContainer');
+        const body = document.body;
+
+        // ============================================================
+        // ✨ افکت‌های بازی
+        // ============================================================
+        function fireConfetti(count = 80) {
+            const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#ffe66d', '#a8e6cf', '#ff8a5c', '#6c5ce7'];
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'confetti';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.width = (Math.random() * 8 + 5) + 'px';
+                el.style.height = (Math.random() * 8 + 5) + 'px';
+                el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                el.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                el.style.animationDelay = (Math.random() * 0.8) + 's';
+                confettiContainer.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            }
+        }
+
+        function fireSparkle(x, y) {
+            const emojis = ['✨', '⭐', '🌟', '💫'];
+            for (let i = 0; i < 6; i++) {
+                const el = document.createElement('div');
+                el.className = 'sparkle';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = (x + (Math.random() - 0.5) * 120) + 'px';
+                el.style.top = (y + (Math.random() - 0.5) * 120) + 'px';
+                el.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                el.style.animationDuration = (Math.random() * 0.6 + 0.4) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1200);
+            }
+        }
+
+        function winEffect() {
+            body.classList.add('win-effect');
+            fireConfetti(120);
+            AudioSystem.playWin();
+            setTimeout(() => body.classList.remove('win-effect'), 2500);
+        }
+
+        function loseEffect() {
+            body.classList.add('lose-effect');
+            AudioSystem.playLose();
+            setTimeout(() => body.classList.remove('lose-effect'), 700);
+        }
+
+        // ============================================================
+        // 🧩 توابع اصلی بازی
+        // ============================================================
+        function loadQuestions(age) {
+            currentQuestions = QUESTIONS_BY_AGE[age] || QUESTIONS_BY_AGE[7];
+            currentIndex = 0;
+            score = 0;
+            isAnswered = false;
+            updateScore();
+            totalQuestions.textContent = currentQuestions.length;
+            finishMessage.classList.remove('show');
+            finishMessage.style.display = 'none';
+            questionArea.style.display = 'flex';
+            nextBtn.classList.remove('show');
+            body.classList.remove('win-effect', 'lose-effect');
+            confettiContainer.innerHTML = '';
+
+            // ریست کردن شمارنده درست ربات
+            if (window.gameFriend) {
+                window.gameFriend.correctCount = 0;
+            }
+
+            renderQuestion();
+
+            // 🚀 به ربات بگو بازی شروع شده
+            if (typeof onGameStart === 'function') {
+                onGameStart();
+            }
+        }
+
+        function renderQuestion() {
+            if (currentIndex >= currentQuestions.length) {
+                showFinish();
+                return;
+            }
+
+            const q = currentQuestions[currentIndex];
+            questionEmoji.textContent = q.emoji;
+            questionText.textContent = q.question;
+            questionHint.textContent = 'یک گزینه را انتخاب کن';
+            questionHint.style.color = 'rgba(255,255,255,0.4)';
+
+            optionsGrid.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.dataset.index = idx;
+                btn.addEventListener('click', (e) => handleAnswer(idx, e));
+                optionsGrid.appendChild(btn);
+            });
+
+            questionCounter.textContent = currentIndex + 1;
+            progressFill.style.width = ((currentIndex) / currentQuestions.length * 100) + '%';
+            isAnswered = false;
+            nextBtn.classList.remove('show');
+
+            // ربات کمک می‌کنه اگه سوال سخت باشه یا بچه وقتش زیاد بشه
+            if (window.gameFriend && currentIndex > 0 && currentIndex % 3 === 0) {
+                setTimeout(() => {
+                    window.gameFriend.help();
+                }, 3000);
+            }
+        }
+
+        function handleAnswer(selected, event) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const q = currentQuestions[currentIndex];
+            const buttons = optionsGrid.querySelectorAll('.option-btn');
+            const isCorrect = selected === q.correct;
+
+            buttons.forEach(btn => btn.classList.add('disabled'));
+
+            buttons.forEach((btn, idx) => {
+                if (idx === q.correct) {
+                    btn.classList.add('correct');
+                }
+                if (idx === selected && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            if (isCorrect) {
+                score += 10;
+                updateScore();
+                questionHint.textContent = '✅ آفرین! درست بود!';
+                questionHint.style.color = '#2ed573';
+                const rect = buttons[selected].getBoundingClientRect();
+                fireSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                winEffect();
+
+                // 🚀 به ربات بگو درست جواب داده
+                if (typeof onGameCorrect === 'function') {
+                    onGameCorrect();
+                }
+            } else {
+                questionHint.textContent = '❌ نه، دوباره سعی کن!';
+                questionHint.style.color = '#ff4757';
+                loseEffect();
+
+                // 🚀 به ربات بگو غلط جواب داده
+                if (typeof onGameWrong === 'function') {
+                    onGameWrong();
+                }
+            }
+
+            setTimeout(() => {
+                nextBtn.classList.add('show');
+            }, 600);
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            renderQuestion();
+        }
+
+        function updateScore() {
+            scoreDisplay.textContent = score;
+        }
+
+        function showFinish() {
+            questionArea.style.display = 'none';
+            finishMessage.style.display = 'block';
+            finishMessage.classList.add('show');
+            finalScore.textContent = score;
+            progressFill.style.width = '100%';
+
+            const bigEmoji = finishMessage.querySelector('.big-emoji');
+            const title = finishMessage.querySelector('h2');
+
+            if (score === currentQuestions.length * 10) {
+                bigEmoji.textContent = '🏆';
+                title.textContent = '🎉 عالی! همه رو درست زدی!';
+                fireConfetti(200);
+                setTimeout(() => fireConfetti(150), 800);
+                AudioSystem.playCelebration();
+
+                if (typeof onGameWin === 'function') {
+                    onGameWin();
+                }
+            } else if (score >= currentQuestions.length * 7) {
+                bigEmoji.textContent = '🌟';
+                title.textContent = '👏 خیلی خوب! ادامه بده!';
+                fireConfetti(80);
+                AudioSystem.playWin();
+
+                if (typeof onGameWin === 'function') {
+                    onGameWin();
+                }
+            } else if (score >= currentQuestions.length * 4) {
+                bigEmoji.textContent = '💪';
+                title.textContent = '📚 خوب بود! بیشتر تمرین کن!';
+
+                if (typeof onGameLose === 'function') {
+                    onGameLose();
+                }
+            } else {
+                bigEmoji.textContent = '📖';
+                title.textContent = '💪 ناامید نشو! دوباره تلاش کن!';
+                AudioSystem.playLose();
+
+                if (typeof onGameLose === 'function') {
+                    onGameLose();
+                }
+            }
+        }
+
+        function restartGame() {
+            loadQuestions(currentAge);
+
+            setTimeout(() => {
+                if (typeof onGameStart === 'function') {
+                    onGameStart();
+                }
+            }, 500);
+        }
+
+        // ============================================================
+        // 🤖 ربات هوشمند (بدون دکمه)
+        // ============================================================
+        const gameFriend = {
+            name: 'ربات کوچولو',
+            emoji: '🤖',
+            state: 'idle',
+            correctCount: 0,
+            wrongCount: 0,
+            messageTimeout: null,
+            helpTimeout: null,
+            isHelping: false,
+
+            messages: {
+                start: [
+                    'بوق! بوق! شروع کنیم! 🤖',
+                    'سلام دوست! من ربات کمکتونم! ⚡',
+                    'آماده‌ای؟ سیستم روشن! 🚀'
+                ],
+                correct: [
+                    'بیپ! درست بود! 🤖✨',
+                    'تحلیل: پاسخ صحیح! آفرین! ⭐',
+                    'سیستم ثبت کرد: خیلی باهوشی! 🧠',
+                    'بوق! عالی بود! ادامه بده! 🎯'
+                ],
+                wrong: [
+                    'بیپ! اشتباه شد! دوباره امتحان کن! 🔄',
+                    'خطا! نگران نباش، تلاش مجدد! 💪',
+                    'بوق بوق! باز هم سعی کن! 🌱',
+                    'سیستم ریست شد! یه بار دیگه! 🤖'
+                ],
+                win: [
+                    'بوق بوق بوق! پیروزی! 🏆🤖',
+                    'تحلیل: شما قهرمانی! 🎉',
+                    'سیستم خوشحال! عالی بودی! ❤️'
+                ],
+                lose: [
+                    'بیپ... بازی خوب بود! دوباره؟ 😊',
+                    'بوق! ناامید نشو! دفعه بعد می‌بری! 💪',
+                    'سیستم ریست... برای بازی بعدی آماده‌ام! 🤖'
+                ],
+                thinking: [
+                    'تحلیل در حال انجام... 🤔',
+                    'بیپ! فکر کنم این گزینه درسته! 🧠',
+                    'پردازش... صبر کن! ⚡'
+                ],
+                perfect: [
+                    'بیپ بیپ بیپ! ۳ تا درست پشت سر هم! 🏆🤖',
+                    'سیستم شوکه! تو رباتی یا انسان؟ 😱',
+                    'بوق! رکورد شکستی! 🌟'
+                ],
+                greeting: [
+                    'سلام! من ربات کوچولو هستم! 🤖',
+                    'بوق! خوش اومدی! 😊',
+                    'بیپ! بیا بازی کنیم! 🎮'
+                ],
+                help: [
+                    'بیپ! به گزینه‌ها دقت کن! 🎯',
+                    'توصیه: با دقت بخون! 📖',
+                    'بوق! می‌تونم یه کمکت کنم؟ 🤖',
+                    'یه نگاه به گزینه‌ها بنداز! 👀',
+                    'آهسته و با دقت انتخاب کن! 🧘'
+                ],
+                encouragement: [
+                    'تو می‌تونی! بهت اعتماد دارم! 💪',
+                    'بیپ! خیلی خوب داری پیش می‌ری! 🌟',
+                    'بوق! ادامه بده، عالیه! 🚀'
+                ]
+            },
+
+            create() {
+                if (document.getElementById('gameFriend')) return;
+
+                const div = document.createElement('div');
+                div.id = 'gameFriend';
+                div.className = 'game-friend';
+                div.innerHTML = `
+                    <div class="friend-avatar" id="friendAvatar">
+                        <span class="friend-emoji" id="friendEmoji">${this.emoji}</span>
+                        <div class="friend-status" id="friendStatus"></div>
+                        <div class="robot-antenna">
+                            <span class="antenna-light"></span>
+                        </div>
+                    </div>
+                    <div class="friend-bubble" id="friendBubble">
+                        <span class="friend-text" id="friendText">${this.name} همراه شماست</span>
+                        <span class="friend-dot"></span>
+                        <span class="friend-dot"></span>
+                        <span class="friend-dot"></span>
+                    </div>
+                `;
+                document.body.appendChild(div);
+
+                setTimeout(() => {
+                    this.say(this.getRandomMessage('greeting'));
+                }, 1500);
+
+                // شروع تایمر کمک‌رسانی
+                this.startHelpTimer();
+            },
+
+            startHelpTimer() {
+                // هر ۱۰ ثانیه اگه بازی سوال جدیدی داشته باشه و بچه جواب نداده، کمک کنه
+                setInterval(() => {
+                    if (!isAnswered && currentIndex < currentQuestions.length) {
+                        this.help();
+                    }
+                }, 15000);
+            },
+
+            getRandomMessage(type) {
+                const messages = this.messages[type] || ['بیپ! سلام! 🤖'];
+                return messages[Math.floor(Math.random() * messages.length)];
+            },
+
+            say(text, state = null) {
+                const textEl = document.getElementById('friendText');
+                const bubbleEl = document.getElementById('friendBubble');
+
+                if (!textEl) return;
+
+                this.currentMessage = text;
+                textEl.textContent = text;
+
+                bubbleEl.style.animation = 'none';
+                setTimeout(() => {
+                    bubbleEl.style.animation = 'bubbleAppear 0.4s ease';
+                }, 10);
+
+                // تنظیم وضعیت بر اساس متن
+                let newState = state;
+                if (!newState) {
+                    if (text.includes('آفرین') || text.includes('عالی') || text.includes('درست') || text.includes('باهوش')) {
+                        newState = 'happy';
+                    } else if (text.includes('نگران') || text.includes('اشتباه') || text.includes('خطا') || text.includes(
+                        'تلاش')) {
+                        newState = 'sad';
+                    } else if (text.includes('تحلیل') || text.includes('فکر') || text.includes('پردازش')) {
+                        newState = 'thinking';
+                    } else if (text.includes('قهرمان') || text.includes('پیروزی') || text.includes('رکورد')) {
+                        newState = 'excited';
+                    } else if (text.includes('کمک') || text.includes('توصیه') || text.includes('دقت')) {
+                        newState = 'helping';
+                    }
+                }
+
+                if (newState) {
+                    this.setState(newState);
+                }
+
+                if (this.messageTimeout) {
+                    clearTimeout(this.messageTimeout);
+                }
+
+                this.messageTimeout = setTimeout(() => {
+                    this.setState('idle');
+                }, 5000);
+            },
+
+            setState(state) {
+                this.state = state;
+                const el = document.getElementById('gameFriend');
+                const status = document.getElementById('friendStatus');
+
+                if (!el) return;
+
+                el.classList.remove('happy', 'sad', 'excited', 'thinking', 'helping');
+
+                if (state !== 'idle') {
+                    el.classList.add(state);
+                }
+
+                if (status) {
+                    status.className = 'friend-status';
+                    if (state !== 'idle') {
+                        status.classList.add(state);
+                    }
+                }
+            },
+
+            // ============================================================
+            // واکنش‌های خودکار به بازی
+            // ============================================================
+
+            onCorrect() {
+                this.correctCount++;
+                this.wrongCount = 0;
+
+                if (this.correctCount >= 3) {
+                    this.say(this.getRandomMessage('perfect'), 'excited');
+                    this.correctCount = 0;
+                } else {
+                    this.say(this.getRandomMessage('correct'), 'happy');
+                }
+
+                // تشویق اضافی اگه تعداد درست‌ها زیاد باشه
+                if (this.correctCount === 2) {
+                    setTimeout(() => {
+                        this.say(this.getRandomMessage('encouragement'), 'happy');
+                    }, 2000);
+                }
+            },
+
+            onWrong() {
+                this.correctCount = 0;
+                this.wrongCount++;
+
+                if (this.wrongCount >= 2) {
+                    // بعد از ۲ بار غلط، کمک بیشتری بکنه
+                    this.say(this.getRandomMessage('help'), 'helping');
+                    this.wrongCount = 0;
+                } else {
+                    this.say(this.getRandomMessage('wrong'), 'sad');
+                }
+            },
+
+            onWin() {
+                this.say(this.getRandomMessage('win'), 'excited');
+                this.correctCount = 0;
+                this.wrongCount = 0;
+                setTimeout(() => {
+                    this.setState('idle');
+                }, 4000);
+            },
+
+            onLose() {
+                this.say(this.getRandomMessage('lose'), 'sad');
+                this.correctCount = 0;
+                this.wrongCount = 0;
+                setTimeout(() => {
+                    this.setState('idle');
+                }, 3000);
+            },
+
+            onStart() {
+                this.correctCount = 0;
+                this.wrongCount = 0;
+                this.say(this.getRandomMessage('start'), 'thinking');
+            },
+
+            // کمک کردن به کودک
+            help() {
+                if (this.isHelping || isAnswered) return;
+                this.isHelping = true;
+
+                // اگه قبلاً چند بار اشتباه کرده، کمک ویژه
+                if (this.wrongCount >= 1) {
+                    this.say('بیپ! به گزینه‌ای که درسته دقت کن! 🎯', 'helping');
+                } else {
+                    this.say(this.getRandomMessage('help'), 'helping');
+                }
+
+                setTimeout(() => {
+                    this.isHelping = false;
+                    this.setState('idle');
+                }, 4000);
+            },
+
+            // پیام تشویقی موقع پیشرفت
+            encourage() {
+                this.say(this.getRandomMessage('encouragement'), 'happy');
+            }
+        };
+
+        // ============================================================
+        // 📞 توابع ارتباط ربات با بازی
+        // ============================================================
+        function onGameCorrect() {
+            gameFriend.onCorrect();
+        }
+
+        function onGameWrong() {
+            gameFriend.onWrong();
+        }
+
+        function onGameWin() {
+            gameFriend.onWin();
+        }
+
+        function onGameLose() {
+            gameFriend.onLose();
+        }
+
+        function onGameStart() {
+            gameFriend.onStart();
+        }
+
+        // ============================================================
+        // 🚀 راه‌اندازی بازی و ربات
+        // ============================================================
+
+        // رویدادهای دکمه‌ها
+        ageBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                ageBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentAge = parseInt(this.dataset.age);
+                loadQuestions(currentAge);
+            });
+        });
+
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartGame);
+
+        // فعال‌سازی صدا با کلیک
+        document.addEventListener('click', () => {
+            AudioSystem.init();
+        }, { once: true });
+
+        // شروع بازی با سن ۷ سال
+        loadQuestions(7);
+
+        // ساخت ربات بعد از لود صفحه
+        document.addEventListener('DOMContentLoaded', function() {
+            gameFriend.create();
+        });
+
+        // برای دسترسی راحت‌تر
+        window.gameFriend = gameFriend;
+        window.onGameCorrect = onGameCorrect;
+        window.onGameWrong = onGameWrong;
+        window.onGameWin = onGameWin;
+        window.onGameLose = onGameLose;
+        window.onGameStart = onGameStart;
+
+        console.log('🤖 ربات هوشمند آماده‌ست!');
+        console.log('💡 ربات خودش کمک می‌کنه و نیاز به دکمه نداره!');
+    </script>
+
+</body>
+</html>
