@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
-    <title>My Story • خاطرات نوزاد</title>
+    <title>اتاق رویا | Dream Chamber</title>
     <link rel="icon" type="image/jpg" href="favicon.jpg" />
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;350;400;500;700&display=swap" rel="stylesheet" />
     <style>
@@ -1129,6 +1129,54 @@
                     0%, 100% { transform: translateY(0); }
                     50% { transform: translateY(-12px); }
                 }
+
+                /* ============================================================
+   انیمیشن‌های فوتر
+   ============================================================ */
+
+/* نقطه‌های شناور */
+@keyframes floatDot {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+    25% { transform: translate(20px, -30px) scale(1.5); opacity: 0.25; }
+    50% { transform: translate(-10px, -50px) scale(0.8); opacity: 0.08; }
+    75% { transform: translate(15px, -20px) scale(1.3); opacity: 0.2; }
+}
+
+/* ستاره‌های چشمک‌زن */
+@keyframes sparkleStar {
+    0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
+    50% { opacity: 0.5; transform: scale(1.4) rotate(20deg); }
+}
+
+/* ماه شناور */
+@keyframes floatMoon {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* کلمات یکی یکی */
+@keyframes wordFade {
+    0% { opacity: 0; transform: translateY(20px) scale(0.9); filter: blur(2px); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* خط نورانی */
+@keyframes shineLine {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+/* محو شدن از پایین */
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 0.3; transform: translateY(0); }
+}
+
+/* تپش قلب */
+@keyframes heartPulse {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.2; transform: scale(1.15); }
+}
     </style>
 </head>
 <body>
@@ -1210,6 +1258,9 @@
                 </a>
                 <a href="stories.html" style="text-decoration:none;">
                     <button class="nav-btn" style="background:transparent; border-color:transparent;">قصه‌ها</button>
+                </a>
+                <a href="draw.html" style="text-decoration:none;">
+                <button class="nav-btn" style="background:transparent; border-color:transparent;"> نقاشی های من</button>
                 </a>
             </nav>
 
@@ -1369,8 +1420,21 @@
         </div>
     </div>
 
-    <!-- ===== صفحه بازی‌ها ===== -->
+   <!-- ===== صفحه بازی‌ها ===== -->
 <div id="page-games" class="story-page">
+    
+    <!-- معرفی ربات کوچولو -->
+    <div style="background:linear-gradient(135deg,rgba(100,200,255,0.08),rgba(200,200,255,0.08)); border-radius:var(--radius-xl); padding:1.2rem 2rem; margin-bottom:1.5rem; border:1px solid rgba(100,200,255,0.15); text-align:center; display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <span style="font-size:3rem; animation:bounceFriend 2s ease-in-out infinite;">🤖</span>
+        <div style="font-size:1rem; color:var(--color-soft-brown); line-height:1.6;">
+            <strong>🤖 با یک دوست جدید آشنا شو!</strong><br>
+            اینجا <span style="color:#4A8DB7; font-weight:500;">«ربات کوچولو»</span> منتظر توست!
+        </div>
+        <a href="friend.html" style="background:rgba(100,200,255,0.15); border:1px solid rgba(100,200,255,0.2); padding:0.3rem 1.5rem; border-radius:var(--radius-xl); font-family:var(--font-primary); font-size:0.9rem; color:var(--color-soft-brown); cursor:pointer; transition:all var(--transition-medium); text-decoration:none; display:inline-block;">
+            🤗 انتخاب ربات
+        </a>
+    </div>
+
     <div class="story-card" style="text-align:center; background:rgba(212,197,249,0.25); backdrop-filter:blur(6px); border:1px solid rgba(212,197,249,0.3); box-shadow:0 8px 30px rgba(160,130,200,0.22);">
         <div style="font-size:4rem; margin-bottom:0.5rem; animation: flyRocket 2s ease-in-out infinite; display:inline-block;">🚀</div>
         <h2 style="font-size:2rem; font-weight:300; color:var(--color-charcoal); margin-bottom:0.5rem;">
@@ -1618,7 +1682,21 @@
         { id: 'cloud', emoji: '☁️', name: 'ابرجان', msgs: ['سلاااام! ☁️ من ابرجانم! بیا بریم تو آسمون پرواز کنیم!', 'چطوری دوست نازنینم؟ ☁️ امروز هوا برای پرواز عالیه!'] },
         { id: 'rabbit', emoji: '🐰', name: 'خرگوشک', msgs: ['چی کار می‌کنی؟ 🐰 من هویج خوردم! تو چی؟', 'سلام دوست نازنینم! 🐰 بیا بریم تو باغچه بازی کنیم!'] },
         { id: 'bear', emoji: '🧸', name: 'خرس کوچولو', msgs: ['غوووغ! 🧸 من اینجام! بیا بغلم کن!', 'سلام عزیزم! 🧸 چقدر دلم برات تنگ شده بود!'] },
-        { id: 'book', emoji: '📚', name: 'کتاب', msgs: ['سلام! 📚 من کتابم! بیا با هم قصه بخونیم!', '📚 کتاب می‌گه: هر روز یه صفحه جدید بخون!', '📚 دوست داری با هم یه ماجراجویی توی کتاب‌ها داشته باشیم؟'] }
+        { id: 'book', emoji: '📚', name: 'کتاب', msgs: ['سلام! 📚 من کتابم! بیا با هم قصه بخونیم!', '📚 کتاب می‌گه: هر روز یه صفحه جدید بخون!', '📚 دوست داری با هم یه ماجراجویی توی کتاب‌ها داشته باشیم؟'] },
+        { id: 'brush', emoji: '🖌️', name: 'قلمو', msgs: [
+    'سلام! 🖌️ من قلموم! بیا با هم نقاشی بکشیم!',
+    '🖌️ قلمو می‌گه: هر چیزی که دوست داری بکش!',
+    '🖌️ می‌خوای یه رنگین‌کمان قشنگ بکشیم؟',
+    '🖌️ قلمو عاشق رنگ‌های شاد و قشنگه!',
+    '🖌️ بیا با هم یه نقاشی زیبا بکشیم و ذخیره‌اش کنیم!'
+] },
+{ id: 'robot', emoji: '🤖', name: 'ربات کوچولو', msgs: [
+'سلام! 🤖 من ربات کوچولوم! بیا با هم بازی کنیم!',
+'🤖 ربات می‌گه: من عاشق بازی و یادگیری هستم!',
+'🤖 بیا بریم تو دنیای بازی‌های جذاب!',
+'🤖 ربات کوچولو منتظر تو هست!',
+'🤖 می‌خوای یه بازی جدید یاد بگیری؟'
+] }
     ];
 
     function getChar() {
@@ -1834,6 +1912,71 @@
         }
     }, { once: true });
 </script>
+
+    <!-- ============================================================ -->
+    <!-- ===== فوتر با انیمیشن‌های خیره‌کننده ===== -->
+    <!-- ============================================================ -->
+    <div style="text-align:center; padding:2.5rem 1.5rem 1rem; margin:2.5rem auto 0; max-width:900px; border-top:1px solid rgba(209,233,246,0.1); position:relative; overflow:hidden; background:linear-gradient(135deg, rgba(212,197,249,0.03), rgba(209,233,246,0.03)); border-radius:var(--radius-lg);">
+        
+        <!-- پس‌زمینه با نقطه‌های نورانی متحرک -->
+        <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none;">
+            <span style="position:absolute; top:10%; left:5%; width:4px; height:4px; background:#D4C5F9; border-radius:50%; opacity:0.15; animation: floatDot 8s ease-in-out infinite;"></span>
+            <span style="position:absolute; top:30%; right:10%; width:3px; height:3px; background:#D4C5F9; border-radius:50%; opacity:0.1; animation: floatDot 10s ease-in-out infinite 2s;"></span>
+            <span style="position:absolute; bottom:20%; left:15%; width:5px; height:5px; background:#D4C5F9; border-radius:50%; opacity:0.08; animation: floatDot 7s ease-in-out infinite 1s;"></span>
+            <span style="position:absolute; bottom:40%; right:5%; width:3px; height:3px; background:#D4C5F9; border-radius:50%; opacity:0.12; animation: floatDot 9s ease-in-out infinite 3s;"></span>
+            <span style="position:absolute; top:60%; left:30%; width:4px; height:4px; background:#D4C5F9; border-radius:50%; opacity:0.06; animation: floatDot 11s ease-in-out infinite 0.5s;"></span>
+            <span style="position:absolute; top:15%; left:50%; width:6px; height:6px; background:#D4C5F9; border-radius:50%; opacity:0.04; animation: floatDot 13s ease-in-out infinite 1.5s;"></span>
+        </div>
+
+        <!-- ستاره‌های درخشان -->
+        <div style="position:relative; z-index:1;">
+            <div style="display:flex; justify-content:center; gap:0.8rem; margin-bottom:0.5rem; font-size:1.5rem; opacity:0.2;">
+                <span style="display:inline-block; animation: sparkleStar 2.5s ease-in-out infinite;">✦</span>
+                <span style="display:inline-block; animation: sparkleStar 2.5s ease-in-out infinite 0.6s;">✦</span>
+                <span style="display:inline-block; animation: sparkleStar 2.5s ease-in-out infinite 1.2s;">✦</span>
+                <span style="display:inline-block; animation: sparkleStar 2.5s ease-in-out infinite 0.3s;">✦</span>
+                <span style="display:inline-block; animation: sparkleStar 2.5s ease-in-out infinite 0.9s;">✦</span>
+            </div>
+
+            <!-- آیکون ماه با انیمیشن -->
+            <div style="font-size:2.8rem; margin-bottom:0.5rem; opacity:0.2; animation: floatMoon 5s ease-in-out infinite; display:inline-block;">🌙</div>
+
+            <!-- متن اصلی با انیمیشن کلمات -->
+            <p style="font-size:1.15rem; font-weight:300; color:var(--color-charcoal); letter-spacing:0.02em; line-height:2.4; max-width:600px; margin:0 auto; position:relative; z-index:1;">
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 0.1s both;">اینجا</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 0.3s both;">جایی</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 0.5s both;">است</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 0.7s both;">که</span>
+                <br>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 0.9s both;">رویاهای</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 1.1s both;">کوچک</span>
+                <br>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 1.3s both;">آرام</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 1.5s both;">آرام</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 1.7s both;">به</span>
+                <br>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 1.9s both; color:#4A8DB7; font-weight:400;">خاطره‌های</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 2.1s both; color:#4A8DB7; font-weight:400;">بزرگ</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 2.3s both;">تبدیل</span>
+                <span style="display:inline-block; animation: wordFade 0.8s ease-out 2.5s both;">می‌شوند.</span>
+            </p>
+
+            <!-- خط نورانی با انیمیشن -->
+            <div style="width:120px; height:2px; background:linear-gradient(90deg, transparent, #D4C5F9, transparent); margin:1rem auto; position:relative; overflow:hidden; border-radius:10px;">
+                <span style="position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg, transparent, #9A8AC0, transparent); animation: shineLine 3s ease-in-out infinite;"></span>
+            </div>
+
+            <!-- زیرنویس با انیمیشن -->
+            <p style="font-size:0.8rem; color:var(--color-soft-brown); opacity:0.3; letter-spacing:0.06rem; animation: fadeUp 1s ease-out 2.8s both;">
+                ✦ دفترچه خاطرات یک قصه‌ی شیرین ✦
+            </p>
+
+            <!-- قلب‌های تپنده -->
+            <div style="margin-top:0.6rem; font-size:1.2rem; opacity:0.1; letter-spacing:0.4rem; animation: heartPulse 3s ease-in-out infinite;">
+                ♡ ♡ ♡
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

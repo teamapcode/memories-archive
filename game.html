@@ -2,11 +2,11 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🚀ماجراجویی در سرزمین دانش</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>🚀 ماجراجویی در سرزمین دانش + ربات</title>
     <style>
         /* ============================================================ */
-        /* استایل‌های اصلی بازی (همون قبلی ولی با تغییرات ربات) */
+        /* استایل‌های اصلی بازی */
         /* ============================================================ */
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
 
@@ -14,6 +14,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -24,7 +30,6 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow: hidden;
             transition: background 0.5s ease;
         }
 
@@ -127,6 +132,7 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
+            margin-bottom: 20px;
         }
 
         .game-header {
@@ -136,6 +142,8 @@
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .game-title {
@@ -150,9 +158,10 @@
 
         .game-stats {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             color: rgba(255, 255, 255, 0.8);
             font-size: 14px;
+            flex-wrap: wrap;
         }
 
         .game-stats span {
@@ -169,21 +178,21 @@
 
         .age-selector {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             margin-bottom: 25px;
             flex-wrap: wrap;
         }
 
         .age-btn {
-            padding: 8px 22px;
+            padding: 8px 18px;
             border: 2px solid rgba(255, 255, 255, 0.15);
             border-radius: 30px;
             background: rgba(255, 255, 255, 0.03);
             color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -204,9 +213,9 @@
         .question-area {
             background: rgba(255, 255, 255, 0.04);
             border-radius: 24px;
-            padding: 30px;
+            padding: 25px 20px;
             margin-bottom: 20px;
-            min-height: 200px;
+            min-height: 180px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -216,8 +225,8 @@
         }
 
         .question-emoji {
-            font-size: 56px;
-            margin-bottom: 12px;
+            font-size: 48px;
+            margin-bottom: 10px;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -233,11 +242,11 @@
 
         .question-text {
             color: #fff;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             text-align: center;
             line-height: 1.6;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .question-hint {
@@ -249,31 +258,36 @@
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
             margin-top: 10px;
             width: 100%;
             max-width: 500px;
         }
 
         .option-btn {
-            padding: 16px 20px;
+            padding: 14px 16px;
             border: 2px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             background: rgba(255, 255, 255, 0.03);
             color: rgba(255, 255, 255, 0.85);
             font-family: inherit;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.25s ease;
             backdrop-filter: blur(4px);
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .option-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.02);
+        }
+
+        .option-btn:active {
+            transform: scale(0.95);
         }
 
         .option-btn.correct {
@@ -299,7 +313,7 @@
                 transform: scale(1);
             }
             30% {
-                transform: scale(1.15);
+                transform: scale(1.12);
             }
             60% {
                 transform: scale(0.95);
@@ -315,38 +329,43 @@
                 transform: translateX(0);
             }
             20% {
-                transform: translateX(-12px) rotate(-3deg);
+                transform: translateX(-10px) rotate(-2deg);
             }
             40% {
-                transform: translateX(12px) rotate(3deg);
+                transform: translateX(10px) rotate(2deg);
             }
             60% {
-                transform: translateX(-6px);
+                transform: translateX(-5px);
             }
             80% {
-                transform: translateX(6px);
+                transform: translateX(5px);
             }
         }
 
         .next-btn {
             display: none;
             margin: 20px auto 0;
-            padding: 14px 50px;
+            padding: 14px 40px;
             border: none;
             border-radius: 30px;
             background: linear-gradient(135deg, #f7971e, #ffd200);
             color: #1a1a2e;
             font-family: inherit;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 900;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(247, 151, 30, 0.25);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .next-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 40px rgba(247, 151, 30, 0.4);
+        }
+
+        .next-btn:active {
+            transform: scale(0.95);
         }
 
         .next-btn.show {
@@ -377,14 +396,14 @@
         }
 
         .finish-message .big-emoji {
-            font-size: 72px;
+            font-size: 64px;
             display: block;
             margin-bottom: 10px;
         }
 
         .finish-message h2 {
             color: #fff;
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 6px;
         }
 
@@ -395,7 +414,7 @@
 
         .restart-btn {
             margin-top: 18px;
-            padding: 12px 40px;
+            padding: 12px 36px;
             border: 2px solid rgba(255, 255, 255, 0.15);
             border-radius: 30px;
             background: transparent;
@@ -405,11 +424,16 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .restart-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .restart-btn:active {
+            transform: scale(0.95);
         }
 
         .progress-bar {
@@ -430,60 +454,66 @@
         }
 
         /* ============================================================ */
-        /* استایل‌های ربات هوشمند (بدون دکمه) */
+        /* استایل‌های ربات هوشمند - بهینه برای گوشی + جمع‌شونده */
         /* ============================================================ */
         .game-friend {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
             z-index: 9999;
             cursor: pointer;
             display: flex;
             align-items: flex-end;
-            gap: 12px;
+            gap: 10px;
             animation: friendFloat 3s ease-in-out infinite;
             transition: all 0.3s ease;
+            max-width: 90vw;
         }
 
         .friend-avatar {
             position: relative;
-            width: 76px;
-            height: 76px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(145deg, #4a6fa5, #2c3e6b);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 36px;
             box-shadow: 0 8px 35px rgba(44, 62, 107, 0.5), inset 0 -3px 8px rgba(0, 0, 0, 0.3), inset 0 3px 8px rgba(255,
                     255, 255, 0.2);
             border: 3px solid rgba(255, 255, 255, 0.2);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .friend-avatar:hover {
-            transform: scale(1.1) rotate(-8deg);
+            transform: scale(1.08) rotate(-5deg);
+        }
+
+        .friend-avatar:active {
+            transform: scale(0.9);
         }
 
         .robot-antenna {
             position: absolute;
-            top: -18px;
+            top: -16px;
             left: 50%;
             transform: translateX(-50%);
             width: 4px;
-            height: 20px;
+            height: 18px;
             background: linear-gradient(to top, #7f8c8d, #bdc3c7);
             border-radius: 2px;
         }
 
         .antenna-light {
             position: absolute;
-            top: -8px;
+            top: -7px;
             left: 50%;
             transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
+            width: 11px;
+            height: 11px;
             background: #ffd700;
             border-radius: 50%;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
@@ -506,8 +536,8 @@
             position: absolute;
             bottom: -2px;
             right: -2px;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             border: 3px solid rgba(255, 255, 255, 0.8);
             background: #2ed573;
@@ -548,9 +578,9 @@
         .friend-bubble {
             background: rgba(30, 40, 60, 0.95);
             backdrop-filter: blur(12px);
-            border-radius: 20px 20px 20px 5px;
-            padding: 14px 20px;
-            max-width: 290px;
+            border-radius: 18px 18px 18px 4px;
+            padding: 12px 16px;
+            max-width: 260px;
             border: 2px solid rgba(78, 205, 196, 0.3);
             box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             position: relative;
@@ -561,32 +591,32 @@
         .friend-bubble::before {
             content: '';
             position: absolute;
-            bottom: 12px;
-            right: -14px;
-            border: 8px solid transparent;
+            bottom: 10px;
+            right: -12px;
+            border: 7px solid transparent;
             border-right-color: rgba(30, 40, 60, 0.95);
             border-left: 0;
         }
 
         .friend-text {
             font-family: 'Vazirmatn', 'Courier New', monospace;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             color: #a8e6cf;
             display: block;
-            line-height: 1.7;
-            min-height: 24px;
+            line-height: 1.6;
+            min-height: 22px;
             text-shadow: 0 0 20px rgba(78, 205, 196, 0.1);
             letter-spacing: 0.3px;
         }
 
         .friend-dot {
             display: inline-block;
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: #4ecdc4;
             border-radius: 50%;
-            margin-right: 4px;
+            margin-right: 3px;
             animation: dotPulse 1.5s ease-in-out infinite;
             box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
         }
@@ -598,13 +628,45 @@
             animation-delay: 0.6s;
         }
 
+        /* دکمه جمع کردن ربات */
+        .friend-toggle-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .friend-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        .friend-toggle-btn:active {
+            transform: scale(0.85);
+        }
+
         @keyframes friendFloat {
             0%,
             100% {
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-12px);
+                transform: translateY(-10px);
             }
         }
 
@@ -626,19 +688,6 @@
             }
             50% {
                 transform: scale(1.3);
-            }
-        }
-
-        @keyframes shake {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-6px);
-            }
-            75% {
-                transform: translateX(6px);
             }
         }
 
@@ -664,10 +713,10 @@
                 transform: translateY(0);
             }
             30% {
-                transform: translateY(-25px) scale(1.1);
+                transform: translateY(-22px) scale(1.08);
             }
             60% {
-                transform: translateY(-12px);
+                transform: translateY(-10px);
             }
         }
 
@@ -681,10 +730,10 @@
                 transform: rotate(0);
             }
             25% {
-                transform: rotate(-12deg);
+                transform: rotate(-10deg);
             }
             75% {
-                transform: rotate(12deg);
+                transform: rotate(10deg);
             }
         }
 
@@ -697,7 +746,7 @@
                 transform: rotate(0) scale(1);
             }
             50% {
-                transform: rotate(180deg) scale(1.2);
+                transform: rotate(180deg) scale(1.15);
             }
             100% {
                 transform: rotate(360deg) scale(1);
@@ -714,7 +763,7 @@
                 transform: scale(1) rotate(0);
             }
             50% {
-                transform: scale(0.95) rotate(-5deg);
+                transform: scale(0.95) rotate(-4deg);
             }
         }
 
@@ -796,86 +845,308 @@
             }
         }
 
-        @media (max-width: 600px) {
+        /* ============================================================ */
+        /* واکنش‌گرایی برای گوشی - نسخه بهینه */
+        /* ============================================================ */
+
+        @media (max-width: 768px) {
             .game-container {
-                padding: 18px;
+                padding: 18px 15px;
                 border-radius: 28px;
+                margin-bottom: 10px;
             }
+
             .game-title {
                 font-size: 18px;
             }
+
             .question-text {
-                font-size: 18px;
+                font-size: 17px;
             }
+
+            .question-emoji {
+                font-size: 38px;
+            }
+
             .options-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 8px;
             }
+
             .option-btn {
-                font-size: 15px;
-                padding: 12px 14px;
+                font-size: 14px;
+                padding: 12px 12px;
             }
+
             .age-btn {
                 font-size: 12px;
-                padding: 6px 16px;
+                padding: 6px 14px;
             }
-            .question-emoji {
-                font-size: 40px;
-            }
-            .friend-avatar {
-                width: 62px;
-                height: 62px;
-                font-size: 34px;
-            }
-            .friend-bubble {
-                max-width: 210px;
-                padding: 10px 14px;
-            }
-            .friend-text {
-                font-size: 13px;
-            }
-            .game-friend {
-                bottom: 15px;
-                right: 15px;
-                gap: 8px;
-            }
-            .robot-antenna {
-                height: 16px;
-                top: -14px;
-            }
-            .antenna-light {
-                width: 10px;
-                height: 10px;
-                top: -6px;
-            }
-        }
 
-        @media (max-width: 400px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
             .game-stats {
                 font-size: 12px;
-                gap: 10px;
+                gap: 8px;
             }
+
             .game-stats span {
                 padding: 4px 10px;
             }
+
+            .next-btn {
+                font-size: 15px;
+                padding: 12px 30px;
+            }
+
+            .finish-message .big-emoji {
+                font-size: 50px;
+            }
+            .finish-message h2 {
+                font-size: 20px;
+            }
+
+            /* ======== ربات در گوشی ======== */
+            .game-friend {
+                bottom: 12px;
+                right: 12px;
+                gap: 8px;
+                transform: scale(0.75);
+                transform-origin: bottom right;
+            }
+
             .friend-avatar {
-                width: 52px;
-                height: 52px;
+                width: 56px;
+                height: 56px;
                 font-size: 28px;
+                border-width: 2px;
             }
+
             .friend-bubble {
-                max-width: 170px;
+                max-width: 190px;
                 padding: 8px 12px;
+                border-radius: 14px 14px 14px 4px;
             }
+
             .friend-text {
                 font-size: 12px;
+                min-height: 18px;
+                line-height: 1.5;
             }
+
+            .friend-bubble::before {
+                bottom: 8px;
+                right: -10px;
+                border-width: 6px;
+            }
+
+            .robot-antenna {
+                height: 14px;
+                top: -12px;
+                width: 3px;
+            }
+
+            .antenna-light {
+                width: 9px;
+                height: 9px;
+                top: -5px;
+            }
+
             .friend-status {
                 width: 16px;
                 height: 16px;
+                border-width: 2px;
+            }
+
+            .friend-toggle-btn {
+                width: 18px;
+                height: 18px;
+                font-size: 9px;
+                top: -4px;
+                right: -4px;
+            }
+
+            .friend-dot {
+                width: 4px;
+                height: 4px;
+                margin-right: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 14px 12px;
+                border-radius: 22px;
+            }
+
+            .game-title {
+                font-size: 16px;
+            }
+
+            .question-text {
+                font-size: 15px;
+            }
+
+            .question-emoji {
+                font-size: 32px;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+                max-width: 100%;
+            }
+
+            .option-btn {
+                font-size: 13px;
+                padding: 10px 12px;
+                border-radius: 12px;
+            }
+
+            .age-btn {
+                font-size: 11px;
+                padding: 5px 12px;
+            }
+
+            .game-stats {
+                font-size: 11px;
+                gap: 6px;
+            }
+
+            .game-stats span {
+                padding: 3px 8px;
+            }
+
+            .question-area {
+                padding: 18px 14px;
+                min-height: 150px;
+            }
+
+            .next-btn {
+                font-size: 14px;
+                padding: 10px 24px;
+            }
+
+            .finish-message .big-emoji {
+                font-size: 42px;
+            }
+            .finish-message h2 {
+                font-size: 18px;
+            }
+            .finish-message p {
+                font-size: 14px;
+            }
+
+            .restart-btn {
+                font-size: 14px;
+                padding: 10px 28px;
+            }
+
+            .progress-bar {
+                height: 3px;
+                margin-bottom: 14px;
+            }
+
+            /* ======== ربات در گوشی‌های خیلی کوچک ======== */
+            .game-friend {
+                bottom: 8px;
+                right: 8px;
+                gap: 6px;
+                transform: scale(0.6);
+                transform-origin: bottom right;
+            }
+
+            .friend-avatar {
+                width: 46px;
+                height: 46px;
+                font-size: 22px;
+                border-width: 2px;
+                box-shadow: 0 4px 20px rgba(44, 62, 107, 0.4);
+            }
+
+            .friend-bubble {
+                max-width: 150px;
+                padding: 6px 10px;
+                border-radius: 12px 12px 12px 3px;
+                border-width: 1.5px;
+            }
+
+            .friend-text {
+                font-size: 10px;
+                min-height: 16px;
+                line-height: 1.4;
+            }
+
+            .friend-bubble::before {
+                bottom: 6px;
+                right: -8px;
+                border-width: 5px;
+            }
+
+            .robot-antenna {
+                height: 11px;
+                top: -9px;
+                width: 2px;
+            }
+
+            .antenna-light {
+                width: 7px;
+                height: 7px;
+                top: -4px;
+                box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+            }
+
+            .friend-status {
+                width: 13px;
+                height: 13px;
+                border-width: 2px;
+                bottom: -1px;
+                right: -1px;
+            }
+
+            .friend-toggle-btn {
+                width: 16px;
+                height: 16px;
+                font-size: 8px;
+                top: -3px;
+                right: -3px;
+            }
+
+            .friend-dot {
+                width: 3px;
+                height: 3px;
+                margin-right: 2px;
+            }
+
+            .game-friend.happy .friend-avatar {
+                animation: happyJump 0.5s ease;
+            }
+
+            @keyframes happyJump {
+                0%,
+                100% {
+                    transform: translateY(0);
+                }
+                30% {
+                    transform: translateY(-15px) scale(1.05);
+                }
+                60% {
+                    transform: translateY(-8px);
+                }
+            }
+
+            .game-friend.excited .friend-avatar {
+                animation: excitedSpin 0.6s ease;
+            }
+
+            @keyframes excitedSpin {
+                0% {
+                    transform: rotate(0) scale(1);
+                }
+                50% {
+                    transform: rotate(180deg) scale(1.1);
+                }
+                100% {
+                    transform: rotate(360deg) scale(1);
+                }
             }
         }
     </style>
@@ -1036,7 +1307,7 @@
         };
 
         // ============================================================
-        // 📚 دیتابیس سوالات
+        // 📚 دیتابیس سوالات (مختصر شده برای حجم کمتر)
         // ============================================================
         const QUESTIONS_BY_AGE = {
             3: [
@@ -1046,15 +1317,17 @@
                 { emoji: '🔢', question: 'عدد ۳ رو پیدا کن', options: ['۲', '۳', '۴', '۵'], correct: 1 },
                 { emoji: '🐶', question: 'کدوم یکی پارس می‌کنه؟', options: ['🐱 گربه', '🐶 سگ', '🐮 گاو', '🐴 اسب'], correct: 1 },
                 { emoji: '🍕', question: 'کدوم یکی خوردنی‌ست؟', options: ['🪑 صندلی', '📱 گوشی', '🍕 پیتزا', '✏️ مداد'],
-                correct: 2 },
+                    correct: 2 },
                 { emoji: '⬆️', question: 'کدوم جهت بالا هست؟', options: ['⬆️', '⬇️', '⬅️', '➡️'], correct: 0 },
                 { emoji: '🌤️', question: 'کدوم یکی تو آسمونه؟', options: ['🌤️ خورشید', '🐟 ماهی', '🌳 درخت', '🏔️ کوه'],
                     correct: 0 },
                 { emoji: '🚗', question: 'کدوم یکی چرخ داره؟', options: ['🚗 ماشین', '📖 کتاب', '🪑 صندلی', '🍎 سیب'],
-                correct: 0 },
-                { emoji: '👶', question: 'کدوم یکی کوچیکه؟', options: ['🏢 ساختمان', '👶 بچه', '🐘 فیل', '🌍 زمین'], correct: 1 },
+                    correct: 0 },
+                { emoji: '👶', question: 'کدوم یکی کوچیکه؟', options: ['🏢 ساختمان', '👶 بچه', '🐘 فیل', '🌍 زمین'],
+                    correct: 1 },
                 { emoji: '🌿', question: 'کدوم یکی سبزه؟', options: ['🌿 علف', '☀️ خورشید', '🌊 آب', '🏔️ برف'], correct: 0 },
-                { emoji: '🐄', question: 'کدوم یکی شیر میده؟', options: ['🐔 مرغ', '🐄 گاو', '🐑 گوسفند', '🐴 اسب'], correct: 1 },
+                { emoji: '🐄', question: 'کدوم یکی شیر میده؟', options: ['🐔 مرغ', '🐄 گاو', '🐑 گوسفند', '🐴 اسب'],
+                    correct: 1 },
                 { emoji: '☀️', question: 'چی باعث روشنایی روز میشه؟', options: ['🌙 ماه', '☀️ خورشید', '⭐ ستاره', '💡 لامپ'],
                     correct: 1 },
             ],
@@ -1063,9 +1336,12 @@
                 { emoji: '🔤', question: 'کدوم حرف اول الفباست؟', options: ['ب', 'پ', 'الف', 'ت'], correct: 2 },
                 { emoji: '☂️', question: 'برای بارون چی می‌پوشیم؟', options: ['👕 تی‌شرت', '🩳 شورت', '🧥 کاپشن', '☂️ چتر'],
                     correct: 3 },
-                { emoji: '🐄', question: 'کدوم یکی شیر میده؟', options: ['🐔 مرغ', '🐄 گاو', '🐑 گوسفند', '🐴 اسب'], correct: 1 },
-                { emoji: '📏', question: 'کدوم بلندترینه؟', options: ['🐜 مورچه', '🦒 زرافه', '🐱 گربه', '🐭 موش'], correct: 1 },
-                { emoji: '🎨', question: 'رنگ سفید رو پیدا کن', options: ['⚫ سیاه', '⚪ سفید', '🔴 قرمز', '🟢 سبز'], correct: 1 },
+                { emoji: '🐄', question: 'کدوم یکی شیر میده؟', options: ['🐔 مرغ', '🐄 گاو', '🐑 گوسفند', '🐴 اسب'],
+                    correct: 1 },
+                { emoji: '📏', question: 'کدوم بلندترینه؟', options: ['🐜 مورچه', '🦒 زرافه', '🐱 گربه', '🐭 موش'],
+                    correct: 1 },
+                { emoji: '🎨', question: 'رنگ سفید رو پیدا کن', options: ['⚫ سیاه', '⚪ سفید', '🔴 قرمز', '🟢 سبز'],
+                    correct: 1 },
                 { emoji: '🧊', question: 'چی رو تو یخچال می‌ذاریم؟', options: ['🧊 یخ', '📺 تلویزیون', '🛏️ تخت', '🚪 در'],
                     correct: 0 },
                 { emoji: '🎵', question: 'کدوم یکی صدا داره؟', options: ['📺 تلویزیون', '🎵 رادیو', '🪑 صندلی', '📚 کتاب'],
@@ -1082,7 +1358,8 @@
                 { emoji: '🧮', question: '۱۲ + ۸ چند می‌شه؟', options: ['۱۸', '۱۹', '۲۰', '۲۱'], correct: 2 },
                 { emoji: '🌍', question: 'کدوم یکی سیاره‌ست؟', options: ['🌙 ماه', '☀️ خورشید', '🌍 زمین', '⭐ ستاره'],
                     correct: 2 },
-                { emoji: '📖', question: 'کدوم یکی داستان داره؟', options: ['📖 کتاب', '🪑 میز', '🚪 در', '💡 لامپ'], correct: 0 },
+                { emoji: '📖', question: 'کدوم یکی داستان داره؟', options: ['📖 کتاب', '🪑 میز', '🚪 در', '💡 لامپ'],
+                    correct: 0 },
                 { emoji: '🕷️', question: 'چند تا پا داره عنکبوت؟', options: ['۴', '۶', '۸', '۱۰'], correct: 2 },
                 { emoji: '🗣️', question: 'کدوم یکی زبان فارسی نیست؟', options: ['فارسی', 'انگلیسی', 'عربی', 'همه فارسی هستن'],
                     correct: 3 },
@@ -1093,32 +1370,38 @@
                     correct: 1 },
                 { emoji: '🌱', question: 'برای رشد گیاه چی لازمه؟', options: ['☀️ نور', '💧 آب', '🌿 خاک', 'همه موارد'],
                     correct: 3 },
-                { emoji: '🌤️', question: 'آسمون چه رنگیه؟', options: ['🌤️ آبی', '🌿 سبز', '🔴 قرمز', '⚫ سیاه'], correct: 0 },
+                { emoji: '🌤️', question: 'آسمون چه رنگیه؟', options: ['🌤️ آبی', '🌿 سبز', '🔴 قرمز', '⚫ سیاه'],
+                    correct: 0 },
                 { emoji: '🌿', question: 'کدوم یکی اکسیژن تولید می‌کنه؟', options: ['🌿 گیاهان', '🪨 سنگ', '💧 آب', '🌤️ آسمون'],
                     correct: 0 },
-                { emoji: '⚡', question: 'کدوم یکی انرژی میده؟', options: ['⚡ برق', '🪨 سنگ', '🌿 علف', '💧 آب'], correct: 0 },
+                { emoji: '⚡', question: 'کدوم یکی انرژی میده؟', options: ['⚡ برق', '🪨 سنگ', '🌿 علف', '💧 آب'],
+                    correct: 0 },
             ],
             9: [
                 { emoji: '🧮', question: '۴۵ × ۳ چند می‌شه؟', options: ['۱۲۵', '۱۳۰', '۱۳۵', '۱۴۰'], correct: 2 },
-                { emoji: '🌌', question: 'کهکشان راه شیری چه شکلیه؟', options: ['بیضی', 'مارپیچ', 'دایره', 'مثلث'], correct: 1 },
+                { emoji: '🌌', question: 'کهکشان راه شیری چه شکلیه؟', options: ['بیضی', 'مارپیچ', 'دایره', 'مثلث'],
+                    correct: 1 },
                 { emoji: '💻', question: 'کدوم یکی زبان برنامه‌نویسی نیست؟', options: ['پایتون', 'جاوااسکریپت', 'اسپانیایی',
                         'سی‌پلاس‌پلاس'
                     ], correct: 2 },
                 { emoji: '🧬', question: 'DNA مخفف چیه؟', options: ['دی‌ان‌ای', 'دئوکسی‌ریبونوکلئیک اسید', 'هر دو',
                         'هیچ‌کدوم'
                     ], correct: 2 },
-                { emoji: '⚛️', question: 'کوچک‌ترین ذره سازنده ماده کدام است؟', options: ['مولکول', 'اتم', 'الکترون', 'پروتون'],
-                    correct: 1 },
+                { emoji: '⚛️', question: 'کوچک‌ترین ذره سازنده ماده کدام است؟', options: ['مولکول', 'اتم', 'الکترون',
+                        'پروتون'
+                    ], correct: 1 },
                 { emoji: '🌍', question: 'چند درصد سطح زمین آب است؟', options: ['۳۰٪', '۵۰٪', '۷۰٪', '۹۰٪'], correct: 2 },
-                { emoji: '📜', question: 'قدیمی‌ترین خط دنیا کدام است؟', options: ['خط میخی', 'هیروگلیف', 'فارسی باستان', 'چینی'],
-                    correct: 0 },
+                { emoji: '📜', question: 'قدیمی‌ترین خط دنیا کدام است؟', options: ['خط میخی', 'هیروگلیف', 'فارسی باستان',
+                        'چینی'
+                    ], correct: 0 },
                 { emoji: '🎭', question: 'تراژدی یعنی چی؟', options: ['کمدی', 'بازی غم‌انگیز', 'داستان عاشقانه', 'تاریخی'],
                     correct: 1 },
                 { emoji: '⚡', question: 'سرعت نور چند کیلومتر بر ثانیه است؟', options: ['۳۰۰', '۳٬۰۰۰', '۳۰٬۰۰۰',
                         '۳۰۰٬۰۰۰'
                     ], correct: 3 },
                 { emoji: '🧠', question: 'چند درصد مغز انسان آب است؟', options: ['۵۰٪', '۶۵٪', '۷۵٪', '۸۵٪'], correct: 2 },
-                { emoji: '🌤️', question: 'لایه ازن در کجاست؟', options: ['🌤️ جو', '🌿 زمین', '💧 دریا', '🏔️ کوه'], correct: 0 },
+                { emoji: '🌤️', question: 'لایه ازن در کجاست؟', options: ['🌤️ جو', '🌿 زمین', '💧 دریا', '🏔️ کوه'],
+                    correct: 0 },
                 { emoji: '🌿', question: 'فتوسنتز یعنی چی؟', options: ['🌿 ساخت غذا توسط گیاه', '🌤️ تنفس', '💧 تبخیر',
                         '🏔️ فرسایش'
                     ], correct: 0 },
@@ -1217,14 +1500,13 @@
             body.classList.remove('win-effect', 'lose-effect');
             confettiContainer.innerHTML = '';
 
-            // ریست کردن شمارنده درست ربات
             if (window.gameFriend) {
                 window.gameFriend.correctCount = 0;
+                window.gameFriend.wrongCount = 0;
             }
 
             renderQuestion();
 
-            // 🚀 به ربات بگو بازی شروع شده
             if (typeof onGameStart === 'function') {
                 onGameStart();
             }
@@ -1257,11 +1539,10 @@
             isAnswered = false;
             nextBtn.classList.remove('show');
 
-            // ربات کمک می‌کنه اگه سوال سخت باشه یا بچه وقتش زیاد بشه
             if (window.gameFriend && currentIndex > 0 && currentIndex % 3 === 0) {
                 setTimeout(() => {
-                    window.gameFriend.help();
-                }, 3000);
+                    if (!isAnswered) window.gameFriend.help();
+                }, 4000);
             }
         }
 
@@ -1293,7 +1574,6 @@
                 fireSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
                 winEffect();
 
-                // 🚀 به ربات بگو درست جواب داده
                 if (typeof onGameCorrect === 'function') {
                     onGameCorrect();
                 }
@@ -1302,7 +1582,6 @@
                 questionHint.style.color = '#ff4757';
                 loseEffect();
 
-                // 🚀 به ربات بگو غلط جواب داده
                 if (typeof onGameWrong === 'function') {
                     onGameWrong();
                 }
@@ -1338,49 +1617,34 @@
                 fireConfetti(200);
                 setTimeout(() => fireConfetti(150), 800);
                 AudioSystem.playCelebration();
-
-                if (typeof onGameWin === 'function') {
-                    onGameWin();
-                }
+                if (typeof onGameWin === 'function') onGameWin();
             } else if (score >= currentQuestions.length * 7) {
                 bigEmoji.textContent = '🌟';
                 title.textContent = '👏 خیلی خوب! ادامه بده!';
                 fireConfetti(80);
                 AudioSystem.playWin();
-
-                if (typeof onGameWin === 'function') {
-                    onGameWin();
-                }
+                if (typeof onGameWin === 'function') onGameWin();
             } else if (score >= currentQuestions.length * 4) {
                 bigEmoji.textContent = '💪';
                 title.textContent = '📚 خوب بود! بیشتر تمرین کن!';
-
-                if (typeof onGameLose === 'function') {
-                    onGameLose();
-                }
+                if (typeof onGameLose === 'function') onGameLose();
             } else {
                 bigEmoji.textContent = '📖';
                 title.textContent = '💪 ناامید نشو! دوباره تلاش کن!';
                 AudioSystem.playLose();
-
-                if (typeof onGameLose === 'function') {
-                    onGameLose();
-                }
+                if (typeof onGameLose === 'function') onGameLose();
             }
         }
 
         function restartGame() {
             loadQuestions(currentAge);
-
             setTimeout(() => {
-                if (typeof onGameStart === 'function') {
-                    onGameStart();
-                }
+                if (typeof onGameStart === 'function') onGameStart();
             }, 500);
         }
 
         // ============================================================
-        // 🤖 ربات هوشمند (بدون دکمه)
+        // 🤖 ربات هوشمند با قابلیت جمع شدن
         // ============================================================
         const gameFriend = {
             name: 'ربات کوچولو',
@@ -1391,6 +1655,7 @@
             messageTimeout: null,
             helpTimeout: null,
             isHelping: false,
+            bubbleVisible: true,
 
             messages: {
                 start: [
@@ -1456,12 +1721,15 @@
                 div.id = 'gameFriend';
                 div.className = 'game-friend';
                 div.innerHTML = `
-                    <div class="friend-avatar" id="friendAvatar">
+                    <div class="friend-avatar" id="friendAvatar" onclick="gameFriend.toggleBubble(event)">
                         <span class="friend-emoji" id="friendEmoji">${this.emoji}</span>
                         <div class="friend-status" id="friendStatus"></div>
                         <div class="robot-antenna">
                             <span class="antenna-light"></span>
                         </div>
+                        <button class="friend-toggle-btn" id="friendToggleBtn" onclick="event.stopPropagation(); gameFriend.toggleBubble(event);">
+                            💬
+                        </button>
                     </div>
                     <div class="friend-bubble" id="friendBubble">
                         <span class="friend-text" id="friendText">${this.name} همراه شماست</span>
@@ -1472,18 +1740,33 @@
                 `;
                 document.body.appendChild(div);
 
+                this.bubbleVisible = true;
+
                 setTimeout(() => {
                     this.say(this.getRandomMessage('greeting'));
                 }, 1500);
 
-                // شروع تایمر کمک‌رسانی
                 this.startHelpTimer();
             },
 
+            toggleBubble(event) {
+                if (event) event.stopPropagation();
+                const bubble = document.getElementById('friendBubble');
+                const btn = document.getElementById('friendToggleBtn');
+                if (!bubble) return;
+
+                this.bubbleVisible = !this.bubbleVisible;
+                bubble.style.display = this.bubbleVisible ? 'block' : 'none';
+                btn.textContent = this.bubbleVisible ? '💬' : '💭';
+
+                if (this.bubbleVisible) {
+                    this.setState('idle');
+                }
+            },
+
             startHelpTimer() {
-                // هر ۱۰ ثانیه اگه بازی سوال جدیدی داشته باشه و بچه جواب نداده، کمک کنه
                 setInterval(() => {
-                    if (!isAnswered && currentIndex < currentQuestions.length) {
+                    if (!isAnswered && currentIndex < currentQuestions.length && this.bubbleVisible) {
                         this.help();
                     }
                 }, 15000);
@@ -1500,6 +1783,10 @@
 
                 if (!textEl) return;
 
+                if (!this.bubbleVisible) {
+                    this.toggleBubble();
+                }
+
                 this.currentMessage = text;
                 textEl.textContent = text;
 
@@ -1508,13 +1795,12 @@
                     bubbleEl.style.animation = 'bubbleAppear 0.4s ease';
                 }, 10);
 
-                // تنظیم وضعیت بر اساس متن
                 let newState = state;
                 if (!newState) {
                     if (text.includes('آفرین') || text.includes('عالی') || text.includes('درست') || text.includes('باهوش')) {
                         newState = 'happy';
                     } else if (text.includes('نگران') || text.includes('اشتباه') || text.includes('خطا') || text.includes(
-                        'تلاش')) {
+                            'تلاش')) {
                         newState = 'sad';
                     } else if (text.includes('تحلیل') || text.includes('فکر') || text.includes('پردازش')) {
                         newState = 'thinking';
@@ -1559,10 +1845,6 @@
                 }
             },
 
-            // ============================================================
-            // واکنش‌های خودکار به بازی
-            // ============================================================
-
             onCorrect() {
                 this.correctCount++;
                 this.wrongCount = 0;
@@ -1574,7 +1856,6 @@
                     this.say(this.getRandomMessage('correct'), 'happy');
                 }
 
-                // تشویق اضافی اگه تعداد درست‌ها زیاد باشه
                 if (this.correctCount === 2) {
                     setTimeout(() => {
                         this.say(this.getRandomMessage('encouragement'), 'happy');
@@ -1587,7 +1868,6 @@
                 this.wrongCount++;
 
                 if (this.wrongCount >= 2) {
-                    // بعد از ۲ بار غلط، کمک بیشتری بکنه
                     this.say(this.getRandomMessage('help'), 'helping');
                     this.wrongCount = 0;
                 } else {
@@ -1619,12 +1899,10 @@
                 this.say(this.getRandomMessage('start'), 'thinking');
             },
 
-            // کمک کردن به کودک
             help() {
-                if (this.isHelping || isAnswered) return;
+                if (this.isHelping || isAnswered || !this.bubbleVisible) return;
                 this.isHelping = true;
 
-                // اگه قبلاً چند بار اشتباه کرده، کمک ویژه
                 if (this.wrongCount >= 1) {
                     this.say('بیپ! به گزینه‌ای که درسته دقت کن! 🎯', 'helping');
                 } else {
@@ -1637,7 +1915,6 @@
                 }, 4000);
             },
 
-            // پیام تشویقی موقع پیشرفت
             encourage() {
                 this.say(this.getRandomMessage('encouragement'), 'happy');
             }
@@ -1670,7 +1947,6 @@
         // 🚀 راه‌اندازی بازی و ربات
         // ============================================================
 
-        // رویدادهای دکمه‌ها
         ageBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 ageBtns.forEach(b => b.classList.remove('active'));
@@ -1683,20 +1959,16 @@
         nextBtn.addEventListener('click', nextQuestion);
         restartBtn.addEventListener('click', restartGame);
 
-        // فعال‌سازی صدا با کلیک
         document.addEventListener('click', () => {
             AudioSystem.init();
         }, { once: true });
 
-        // شروع بازی با سن ۷ سال
         loadQuestions(7);
 
-        // ساخت ربات بعد از لود صفحه
         document.addEventListener('DOMContentLoaded', function() {
             gameFriend.create();
         });
 
-        // برای دسترسی راحت‌تر
         window.gameFriend = gameFriend;
         window.onGameCorrect = onGameCorrect;
         window.onGameWrong = onGameWrong;
@@ -1705,7 +1977,8 @@
         window.onGameStart = onGameStart;
 
         console.log('🤖 ربات هوشمند آماده‌ست!');
-        console.log('💡 ربات خودش کمک می‌کنه و نیاز به دکمه نداره!');
+        console.log('💡 روی ربات بزنید تا حباب جمع/باز بشه!');
+        console.log('📱 در گوشی کاملاً بهینه شده!');
     </script>
 
 </body>
